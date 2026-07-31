@@ -1,0 +1,55 @@
+@model ReporteVentasViewModel
+@{
+    ViewData["Title"] = "Reporte de ventas";
+}
+
+<h1>Reporte de ventas por rango de fechas</h1>
+<p class="text-muted">Resuelto con un stored procedure (<code>dbo.ReporteVentasPorRango</code>), agrupado por planta.</p>
+
+<form asp-action="VentasPorRango" method="get" class="row g-2 align-items-end mb-4">
+    <div class="col-auto">
+        <label asp-for="Desde" class="form-label"></label>
+        <input asp-for="Desde" type="date" class="form-control" />
+    </div>
+    <div class="col-auto">
+        <label asp-for="Hasta" class="form-label"></label>
+        <input asp-for="Hasta" type="date" class="form-control" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Generar reporte</button>
+    </div>
+</form>
+
+@if (!Model.Items.Any())
+{
+    <p>No hay ventas registradas en el rango seleccionado.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Planta</th>
+                <th>Unidades vendidas</th>
+                <th>Total vendido</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.NombreComun</td>
+                    <td>@item.CantidadVendida</td>
+                    <td>@item.TotalVendido.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Total</th>
+                <th>@Model.UnidadesTotales</th>
+                <th>@Model.TotalGeneral.ToString("C")</th>
+            </tr>
+        </tfoot>
+    </table>
+}

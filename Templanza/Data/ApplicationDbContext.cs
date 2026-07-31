@@ -22,6 +22,7 @@ namespace Templanza.Data
         public DbSet<Orden> Ordenes { get; set; } = null!;
         public DbSet<ItemOrden> ItemOrdenes { get; set; } = null!;
         public DbSet<CorreoEnviado> CorreosEnviados { get; set; } = null!;
+        public DbSet<ReporteVentasItem> ReporteVentas { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -147,6 +148,13 @@ namespace Templanza.Data
                 .WithMany(p => p.ItemOrdenes)
                 .HasForeignKey(io => io.PlantaId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // ----- Reporte de ventas (resultado de stored procedure, sin tabla propia) -----
+            builder.Entity<ReporteVentasItem>(entity =>
+            {
+                entity.HasNoKey().ToView(null);
+                entity.Property(r => r.TotalVendido).HasColumnType("decimal(12,2)");
+            });
 
             // ----- Data Seeding -----
             builder.Entity<Categoria>().HasData(
