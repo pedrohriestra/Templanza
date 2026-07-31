@@ -1,0 +1,76 @@
+@model IEnumerable<Planta>
+@{
+    ViewData["Title"] = "Plantas";
+    string? busqueda = ViewBag.Busqueda;
+    int pagina = ViewBag.Pagina;
+    int totalPaginas = ViewBag.TotalPaginas;
+}
+
+<h1>Plantas</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nueva planta</a>
+</p>
+
+@if (TempData["Exito"] is not null)
+{
+    <div class="alert alert-success">@TempData["Exito"]</div>
+}
+@if (TempData["Error"] is not null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input type="text" name="busqueda" value="@busqueda" class="form-control" placeholder="Buscar por nombre común o científico..." />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">Buscar</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Limpiar</a>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.NombreComun)</th>
+            <th>@Html.DisplayNameFor(m => m.NombreCientifico)</th>
+            <th>Categoría</th>
+            <th>@Html.DisplayNameFor(m => m.Precio)</th>
+            <th>@Html.DisplayNameFor(m => m.Stock)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NombreComun</td>
+                <td>@item.NombreCientifico</td>
+                <td>@item.Categoria?.Nombre</td>
+                <td>@item.Precio.ToString("C")</td>
+                <td>@item.Stock</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (totalPaginas > 1)
+{
+    <nav>
+        <ul class="pagination">
+            @for (var p = 1; p <= totalPaginas; p++)
+            {
+                <li class="page-item @(p == pagina ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-pagina="@p" asp-route-busqueda="@busqueda">@p</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

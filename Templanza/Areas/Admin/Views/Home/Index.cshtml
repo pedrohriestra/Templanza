@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "Panel de administración";
+}
+
+<h1>Panel de administración</h1>
+<p class="text-muted">Gestión del catálogo y moderación del foro de Templanza.</p>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Categorías</h5>
+                <p class="card-text">Categorías de plantas y blends.</p>
+                <a asp-area="Admin" asp-controller="Categorias" asp-action="Index" class="btn btn-outline-primary">Gestionar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Efectos</h5>
+                <p class="card-text">Catálogo de efectos aplicables a las plantas.</p>
+                <a asp-area="Admin" asp-controller="Efectos" asp-action="Index" class="btn btn-outline-primary">Gestionar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Plantas</h5>
+                <p class="card-text">Catálogo de plantas de la tienda.</p>
+                <a asp-area="Admin" asp-controller="Plantas" asp-action="Index" class="btn btn-outline-primary">Gestionar</a>
+            </div>
+        </div>
+    </div>
+</div>

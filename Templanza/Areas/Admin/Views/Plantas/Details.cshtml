@@ -1,0 +1,52 @@
+@model Planta
+@{
+    ViewData["Title"] = "Detalle de planta";
+}
+
+<h1>Detalle de planta</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.NombreComun)</dt>
+    <dd class="col-sm-9">@Model.NombreComun</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.NombreCientifico)</dt>
+    <dd class="col-sm-9">@Model.NombreCientifico</dd>
+
+    <dt class="col-sm-3">Categoría</dt>
+    <dd class="col-sm-9">@Model.Categoria?.Nombre</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.ParteUsada)</dt>
+    <dd class="col-sm-9">@Model.ParteUsada</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Origen)</dt>
+    <dd class="col-sm-9">@Model.Origen</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Precio)</dt>
+    <dd class="col-sm-9">@Model.Precio.ToString("C")</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Stock)</dt>
+    <dd class="col-sm-9">@Model.Stock</dd>
+
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Contraindicaciones)</dt>
+    <dd class="col-sm-9">@Model.Contraindicaciones</dd>
+
+    <dt class="col-sm-3">Efectos</dt>
+    <dd class="col-sm-9">
+        @if (Model.PlantaEfectos.Any())
+        {
+            <ul class="mb-0">
+                @foreach (var pe in Model.PlantaEfectos)
+                {
+                    <li>@pe.Efecto?.Nombre (intensidad @pe.Intensidad/5)</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <span class="text-muted">Sin efectos asociados</span>
+        }
+    </dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Editar</a>
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

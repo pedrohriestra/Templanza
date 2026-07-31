@@ -1,0 +1,86 @@
+@model PlantaViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="NombreComun" class="form-label"></label>
+        <input asp-for="NombreComun" class="form-control" />
+        <span asp-validation-for="NombreComun" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label asp-for="NombreCientifico" class="form-label"></label>
+        <input asp-for="NombreCientifico" class="form-control" />
+        <span asp-validation-for="NombreCientifico" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label asp-for="CategoriaId" class="form-label"></label>
+        <select asp-for="CategoriaId" asp-items="Model.Categorias" class="form-select">
+            <option value="">-- Seleccione --</option>
+        </select>
+        <span asp-validation-for="CategoriaId" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="ParteUsada" class="form-label"></label>
+        <input asp-for="ParteUsada" class="form-control" />
+        <span asp-validation-for="ParteUsada" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="Origen" class="form-label"></label>
+        <input asp-for="Origen" class="form-control" />
+        <span asp-validation-for="Origen" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 mb-3">
+        <label asp-for="Precio" class="form-label"></label>
+        <input asp-for="Precio" class="form-control" />
+        <span asp-validation-for="Precio" class="text-danger"></span>
+    </div>
+    <div class="col-md-3 mb-3">
+        <label asp-for="Stock" class="form-label"></label>
+        <input asp-for="Stock" class="form-control" />
+        <span asp-validation-for="Stock" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Contraindicaciones" class="form-label"></label>
+    <textarea asp-for="Contraindicaciones" class="form-control"></textarea>
+    <span asp-validation-for="Contraindicaciones" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Efectos</label>
+    <div class="table-responsive">
+        <table class="table table-sm align-middle">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Efecto</th>
+                    <th style="width: 200px">Intensidad (1-5)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.Efectos.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" asp-for="Efectos[i].EfectoId" />
+                            <input type="hidden" asp-for="Efectos[i].NombreEfecto" />
+                            <input type="checkbox" asp-for="Efectos[i].Seleccionado" class="form-check-input" />
+                        </td>
+                        <td>@Model.Efectos[i].NombreEfecto</td>
+                        <td>
+                            <input asp-for="Efectos[i].Intensidad" type="number" min="1" max="5" class="form-control form-control-sm" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
