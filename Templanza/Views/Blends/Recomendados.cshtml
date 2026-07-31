@@ -1,0 +1,27 @@
+@model IEnumerable<Blend>
+@{
+    ViewData["Title"] = "Blends recomendados";
+}
+
+<h1>Blends recomendados</h1>
+<p class="text-muted">Recetas oficiales curadas por Templanza.</p>
+
+<div class="row row-cols-1 row-cols-md-2 g-3">
+    @foreach (var blend in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@blend.Nombre</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@blend.Categoria?.Nombre</h6>
+                    <p class="card-text">@blend.Descripcion</p>
+                    <p class="mb-2">
+                        <strong>Ingredientes:</strong>
+                        @string.Join(", ", blend.BlendPlantas.Select(bp => $"{bp.Planta?.NombreComun} ({bp.Cantidad} {bp.Unidad})"))
+                    </p>
+                    <a asp-action="Details" asp-route-id="@blend.Id" class="btn btn-outline-primary">Ver blend</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

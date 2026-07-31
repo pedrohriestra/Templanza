@@ -1,0 +1,36 @@
+@model IEnumerable<Blend>
+@{
+    ViewData["Title"] = "Blends pendientes";
+}
+
+<h1>Blends pendientes de moderación</h1>
+
+@if (TempData["Exito"] is not null)
+{
+    <div class="alert alert-success">@TempData["Exito"]</div>
+}
+
+@if (!Model.Any())
+{
+    <p>No hay blends pendientes de aprobación.</p>
+}
+
+@foreach (var blend in Model)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@blend.Nombre</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@blend.Categoria?.Nombre · por @blend.Usuario?.Nombre · @blend.FechaCreacion.ToString("g")</h6>
+            <p class="card-text">@blend.Descripcion</p>
+            <p>
+                <strong>Ingredientes:</strong>
+                @string.Join(", ", blend.BlendPlantas.Select(bp => $"{bp.Planta?.NombreComun} ({bp.Cantidad} {bp.Unidad})"))
+            </p>
+            <form asp-action="Aprobar" method="post" class="d-inline">
+                <input type="hidden" name="id" value="@blend.Id" />
+                <button type="submit" class="btn btn-success btn-sm">Aprobar</button>
+            </form>
+            <a asp-action="Rechazar" asp-route-id="@blend.Id" class="btn btn-outline-danger btn-sm">Rechazar</a>
+        </div>
+    </div>
+}

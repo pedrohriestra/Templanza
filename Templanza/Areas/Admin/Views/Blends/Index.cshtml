@@ -1,0 +1,47 @@
+@model IEnumerable<Blend>
+@{
+    ViewData["Title"] = "Blends recomendados";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Blends recomendados</h1>
+    <a asp-action="CreateRecomendado" class="btn btn-primary">Nuevo recomendado</a>
+</div>
+
+@if (TempData["Exito"] is not null)
+{
+    <div class="alert alert-success">@TempData["Exito"]</div>
+}
+
+<table id="tablaRecomendados" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var blend in Model)
+        {
+            <tr>
+                <td>@blend.Nombre</td>
+                <td>@blend.Categoria?.Nombre</td>
+                <td>
+                    <a asp-action="EditRecomendado" asp-route-id="@blend.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
+                    <a asp-action="DeleteRecomendado" asp-route-id="@blend.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('#tablaRecomendados').DataTable({
+                language: { url: 'https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-ES.json' }
+            });
+        });
+    </script>
+}

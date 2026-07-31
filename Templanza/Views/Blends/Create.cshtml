@@ -1,0 +1,17 @@
+@model BlendViewModel
+@{
+    ViewData["Title"] = "Crear blend";
+}
+
+<h1>Crear blend</h1>
+<p class="text-muted">Tu blend quedará pendiente de aprobación por un moderador antes de ser visible en el foro.</p>
+
+<form asp-action="Create">
+    <partial name="_Form" />
+    <button type="submit" class="btn btn-primary">Enviar a moderación</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

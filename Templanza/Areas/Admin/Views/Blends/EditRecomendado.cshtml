@@ -1,0 +1,17 @@
+@model BlendViewModel
+@{
+    ViewData["Title"] = "Editar blend recomendado";
+}
+
+<h1>Editar blend recomendado</h1>
+
+<form asp-action="EditRecomendado">
+    <input type="hidden" asp-for="Id" />
+    <partial name="_Form" />
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

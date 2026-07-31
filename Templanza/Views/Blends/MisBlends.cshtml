@@ -1,0 +1,47 @@
+@model IEnumerable<Blend>
+@{
+    ViewData["Title"] = "Mis blends";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Mis blends</h1>
+    <a asp-action="Create" class="btn btn-primary">Crear blend</a>
+</div>
+
+@if (!Model.Any())
+{
+    <p>Todavía no creaste ningún blend.</p>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var blend in Model)
+        {
+            <tr>
+                <td>@blend.Nombre</td>
+                <td>@blend.Categoria?.Nombre</td>
+                <td>
+                    @if (blend.EsPublicado)
+                    {
+                        <span class="badge bg-success">Publicado</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Pendiente de aprobación</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@blend.Id" class="btn btn-sm btn-outline-info">Ver</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

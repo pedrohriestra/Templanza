@@ -27,6 +27,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Blends" asp-action="Index">Foro de Blends</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Blends" asp-action="Recomendados">Recomendados</a>
+                        </li>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Blends" asp-action="MisBlends">Mis blends</a>
+                            </li>
+                        }
                         @if (User.IsInRole("Administrador") || User.IsInRole("Operador"))
                         {
                             <li class="nav-item">
