@@ -1,0 +1,38 @@
+@model IEnumerable<Planta>
+@{
+    ViewData["Title"] = "Tienda";
+    List<Categoria> categorias = ViewBag.Categorias;
+    int? categoriaSeleccionada = ViewBag.CategoriaSeleccionada;
+}
+
+<h1>Tienda</h1>
+<p class="text-muted">Plantas para té, listas para comprar.</p>
+
+<div class="mb-3">
+    <div class="btn-group flex-wrap" role="group">
+        <a asp-action="Index" class="btn btn-sm @(categoriaSeleccionada is null ? "btn-primary" : "btn-outline-primary")">Todas</a>
+        @foreach (var categoria in categorias)
+        {
+            <a asp-action="Index" asp-route-categoriaId="@categoria.Id" class="btn btn-sm @(categoriaSeleccionada == categoria.Id ? "btn-primary" : "btn-outline-primary")">@categoria.Nombre</a>
+        }
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-3">
+    @foreach (var planta in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@planta.NombreComun</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@planta.Categoria?.Nombre</h6>
+                    <p class="card-text">@planta.Precio.ToString("C")</p>
+                    <p class="text-muted">
+                        @(planta.Stock > 0 ? $"Stock: {planta.Stock}" : "Sin stock")
+                    </p>
+                    <a asp-action="Details" asp-route-id="@planta.Id" class="btn btn-outline-primary">Ver más</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,44 @@
+@model IEnumerable<Orden>
+@{
+    ViewData["Title"] = "Órdenes";
+}
+
+<h1>Órdenes</h1>
+
+<table id="tablaOrdenes" class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orden in Model)
+        {
+            <tr>
+                <td>@orden.Id</td>
+                <td>@orden.Usuario?.Nombre</td>
+                <td>@orden.FechaCreacion.ToString("g")</td>
+                <td>@orden.Estado</td>
+                <td>@orden.Total.ToString("C")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@orden.Id" class="btn btn-sm btn-outline-info">Ver</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('#tablaOrdenes').DataTable({
+                language: { url: 'https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-ES.json' }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,58 @@
+@model Orden
+@{
+    ViewData["Title"] = $"Orden #{Model.Id}";
+}
+
+<h1>Orden #@Model.Id</h1>
+<h6 class="text-muted">Cliente: @Model.Usuario?.Nombre (@Model.Usuario?.Email) · @Model.FechaCreacion.ToString("g")</h6>
+
+@if (TempData["Exito"] is not null)
+{
+    <div class="alert alert-success">@TempData["Exito"]</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Planta</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ItemOrdenes)
+        {
+            <tr>
+                <td>@item.Planta?.NombreComun</td>
+                <td>@item.Cantidad</td>
+                <td>@item.PrecioUnitario.ToString("C")</td>
+                <td>@((item.Cantidad * item.PrecioUnitario).ToString("C"))</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="3" class="text-end">Total</th>
+            <th>@Model.Total.ToString("C")</th>
+        </tr>
+    </tfoot>
+</table>
+
+<form asp-action="CambiarEstado" method="post" class="row g-2 align-items-end" style="max-width: 400px">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <div class="col-auto">
+        <label class="form-label">Estado</label>
+        <select name="estado" class="form-select">
+            @foreach (var estado in Enum.GetValues<EstadoOrden>())
+            {
+                <option value="@estado" selected="@(estado == Model.Estado)">@estado</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+</form>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Volver</a>

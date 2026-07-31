@@ -1,0 +1,60 @@
+@model Planta
+@{
+    ViewData["Title"] = Model.NombreComun;
+}
+
+<h1>@Model.NombreComun</h1>
+<h6 class="text-muted">@Model.NombreCientifico · @Model.Categoria?.Nombre</h6>
+
+<p class="fs-4">@Model.Precio.ToString("C")</p>
+<p>@(Model.Stock > 0 ? $"Stock disponible: {Model.Stock}" : "Sin stock disponible")</p>
+
+<dl class="row">
+    @if (!string.IsNullOrWhiteSpace(Model.ParteUsada))
+    {
+        <dt class="col-sm-3">Parte usada</dt>
+        <dd class="col-sm-9">@Model.ParteUsada</dd>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.Origen))
+    {
+        <dt class="col-sm-3">Origen</dt>
+        <dd class="col-sm-9">@Model.Origen</dd>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.Contraindicaciones))
+    {
+        <dt class="col-sm-3">Contraindicaciones</dt>
+        <dd class="col-sm-9">@Model.Contraindicaciones</dd>
+    }
+    @if (Model.PlantaEfectos.Any())
+    {
+        <dt class="col-sm-3">Efectos</dt>
+        <dd class="col-sm-9">
+            <ul class="mb-0">
+                @foreach (var pe in Model.PlantaEfectos)
+                {
+                    <li>@pe.Efecto?.Nombre (intensidad @pe.Intensidad/5)</li>
+                }
+            </ul>
+        </dd>
+    }
+</dl>
+
+@if (Model.Stock > 0)
+{
+    <form asp-controller="Carrito" asp-action="Agregar" method="post">
+        <input type="hidden" name="plantaId" value="@Model.Id" />
+        <div class="row g-2 align-items-end" style="max-width: 300px">
+            <div class="col-auto">
+                <label class="form-label">Cantidad</label>
+                <input type="number" name="cantidad" value="1" min="1" max="@Model.Stock" class="form-control" />
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+            </div>
+        </div>
+    </form>
+}
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Volver a la tienda</a>
+</div>

@@ -1,0 +1,38 @@
+@model IEnumerable<Orden>
+@{
+    ViewData["Title"] = "Mis compras";
+}
+
+<h1>Mis compras</h1>
+
+@if (!Model.Any())
+{
+    <p>Todavía no hiciste ninguna compra.</p>
+    <a asp-controller="Plantas" asp-action="Index" class="btn btn-primary">Ir a la tienda</a>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orden in Model)
+            {
+                <tr>
+                    <td>@orden.FechaCreacion.ToString("g")</td>
+                    <td>@orden.Estado</td>
+                    <td>@orden.Total.ToString("C")</td>
+                    <td>
+                        <a asp-action="DetalleOrden" asp-route-id="@orden.Id" class="btn btn-sm btn-outline-info">Ver detalle</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
