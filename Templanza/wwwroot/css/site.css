@@ -7,8 +7,9 @@ for details on configuring this project to bundle and minify static web assets. 
   --templanza-verde-oscuro: #2f4a3c;
   --templanza-verde: #4a7c59;
   --templanza-verde-claro: #8bab8a;
-  --templanza-beige: #f5f1e6;
-  --templanza-arena: #e8dfc8;
+  --templanza-verde-suave: #e6ede3;
+  --templanza-beige: #efe6d2;
+  --templanza-arena: #ddcea6;
   --templanza-acento: #c98a4b;
   --templanza-texto: #2c2c24;
 }
@@ -32,6 +33,11 @@ body {
   margin-bottom: 60px;
   font-family: 'Nunito', system-ui, -apple-system, sans-serif;
   background-color: var(--templanza-beige);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(74, 124, 89, 0.14), transparent 42%),
+    radial-gradient(circle at 88% 18%, rgba(201, 138, 75, 0.14), transparent 38%),
+    radial-gradient(circle at 50% 100%, rgba(47, 74, 60, 0.08), transparent 45%);
+  background-attachment: fixed;
   color: var(--templanza-texto);
 }
 
@@ -64,8 +70,9 @@ a:hover {
 
 /* Navbar */
 .navbar {
-  background-color: #fff !important;
-  border-bottom: 3px solid var(--templanza-verde);
+  background-color: var(--templanza-verde-suave) !important;
+  border-bottom: 4px solid var(--templanza-verde);
+  box-shadow: 0 0.25rem 0.75rem rgba(47, 74, 60, 0.12);
 }
 
 .navbar-brand {
@@ -124,17 +131,33 @@ a:hover {
 /* Cards */
 .card {
   border: 1px solid var(--templanza-arena);
+  border-top: 4px solid var(--templanza-verde-claro);
   border-radius: 0.6rem;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  background-color: #fffdf8;
+  box-shadow: 0 0.15rem 0.5rem rgba(47, 74, 60, 0.06);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-top-color 0.18s ease;
 }
 
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0.5rem 1.25rem rgba(47, 74, 60, 0.15);
+  border-top-color: var(--templanza-acento);
+  box-shadow: 0 0.5rem 1.25rem rgba(47, 74, 60, 0.18);
 }
 
 .card-title {
   color: var(--templanza-verde-oscuro);
+}
+
+.icono-card {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--templanza-verde-suave);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Animación de entrada */
@@ -151,8 +174,10 @@ a:hover {
 
 /* Hero */
 .hero-templanza {
-  background: linear-gradient(135deg, var(--templanza-beige) 0%, var(--templanza-arena) 100%);
+  background: linear-gradient(135deg, rgba(139, 171, 138, 0.45) 0%, var(--templanza-beige) 55%, rgba(201, 138, 75, 0.25) 100%);
+  border: 1px solid var(--templanza-arena);
   border-radius: 1rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(47, 74, 60, 0.1);
 }
 
 /* Stepper de cantidad */
@@ -224,6 +249,15 @@ button.accept-policy {
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
-  background-color: #fff;
-  border-top: 1px solid var(--templanza-arena);
+  background-color: var(--templanza-verde-oscuro);
+  color: var(--templanza-verde-suave);
+  border-top: none;
+}
+
+.footer a {
+  color: var(--templanza-arena);
+}
+
+.footer a:hover {
+  color: #fff;
 }
