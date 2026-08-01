@@ -1,9 +1,13 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.WebUtilities;
 using Templanza.Models;
+using Templanza.Services;
 
 namespace Templanza.Areas.Identity.Pages.Account
 {
@@ -14,18 +18,21 @@ namespace Templanza.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
+        private readonly IEmailSender _emailSender;
         private readonly ILogger<RegisterModel> _logger;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
+            IEmailSender emailSender,
             ILogger<RegisterModel> logger)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
+            _emailSender = emailSender;
             _logger = logger;
         }
 
@@ -79,6 +86,21 @@ namespace Templanza.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("El usuario creó una cuenta nueva.");
                     await _userManager.AddToRoleAsync(user, "Cliente");
+
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { area = "Identity", userId, code, returnUrl },
+                        protocol: Request.Scheme)!;
+
+                    await _emailSender.EnviarAsync(
+                        Input.Email,
+                        "Confirmá tu cuenta en Templanza",
+                        $"Hola {Input.Nombre}, gracias por registrarte en Templanza.<br />" +
+                        $"Confirmá tu cuenta haciendo clic <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>acá</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
