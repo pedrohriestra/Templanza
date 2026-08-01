@@ -42,7 +42,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Blends" asp-action="MisBlends">Mis blends</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Carrito" asp-action="Index">Carrito</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Carrito" asp-action="Index">Carrito @await Component.InvokeAsync("CarritoBadge")</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Carrito" asp-action="MisOrdenes">Mis compras</a>
@@ -60,6 +60,8 @@
             </div>
         </nav>
     </header>
+    <div id="toast-data" data-exito="@TempData["Exito"]" data-error="@TempData["Error"]" style="display:none;"></div>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -75,6 +77,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

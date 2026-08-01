@@ -5,11 +5,6 @@
 
 <h1>Blends pendientes de moderación</h1>
 
-@if (TempData["Exito"] is not null)
-{
-    <div class="alert alert-success">@TempData["Exito"]</div>
-}
-
 @if (!Model.Any())
 {
     <p>No hay blends pendientes de aprobación.</p>

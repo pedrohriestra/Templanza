@@ -1,8 +1,42 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="px-4 py-5 my-4 text-center hero-templanza">
+    <h1 class="display-4 fw-bold">🌿 Templanza</h1>
+    <p class="lead col-lg-8 mx-auto">
+        Tienda online de hierbas para té y foro comunitario de <strong>blends</strong>:
+        combinaciones de hierbas armadas y compartidas por la comunidad.
+    </p>
+    <div class="d-flex justify-content-center gap-2 mt-4">
+        <a asp-controller="Plantas" asp-action="Index" class="btn btn-primary btn-lg px-4">Ir a la tienda</a>
+        <a asp-controller="Blends" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">Ver el foro de blends</a>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 my-4">
+    <div class="col">
+        <div class="card h-100 text-center fade-in-up">
+            <div class="card-body">
+                <h5 class="card-title">🌿 Catálogo de plantas</h5>
+                <p class="card-text">Manzanilla, menta, jengibre y más, listas para comprar.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100 text-center fade-in-up">
+            <div class="card-body">
+                <h5 class="card-title">💬 Foro de blends</h5>
+                <p class="card-text">Armá tu propia combinación de hierbas y compartila con la comunidad.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100 text-center fade-in-up">
+            <div class="card-body">
+                <h5 class="card-title">⭐ Recomendados</h5>
+                <p class="card-text">Recetas oficiales curadas por Templanza, listas para inspirarte.</p>
+            </div>
+        </div>
+    </div>
 </div>

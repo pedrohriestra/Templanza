@@ -1,3 +1,18 @@
+/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  --templanza-verde-oscuro: #2f4a3c;
+  --templanza-verde: #4a7c59;
+  --templanza-verde-claro: #8bab8a;
+  --templanza-beige: #f5f1e6;
+  --templanza-arena: #e8dfc8;
+  --templanza-acento: #c98a4b;
+  --templanza-texto: #2c2c24;
+}
+
 html {
   font-size: 14px;
 }
@@ -8,10 +23,6 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
 html {
   position: relative;
   min-height: 100%;
@@ -19,6 +30,27 @@ html {
 
 body {
   margin-bottom: 60px;
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+  background-color: var(--templanza-beige);
+  color: var(--templanza-texto);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-weight: 700;
+  color: var(--templanza-verde-oscuro);
+}
+
+a {
+  color: var(--templanza-verde);
+}
+
+a:hover {
+  color: var(--templanza-verde-oscuro);
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem var(--templanza-beige), 0 0 0 0.25rem var(--templanza-verde-claro);
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -28,4 +60,170 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #fff !important;
+  border-bottom: 3px solid var(--templanza-verde);
+}
+
+.navbar-brand {
+  font-weight: 800;
+  color: var(--templanza-verde-oscuro) !important;
+  letter-spacing: 0.5px;
+}
+
+.nav-link.text-dark {
+  color: var(--templanza-texto) !important;
+  transition: color 0.15s ease;
+}
+
+.nav-link.text-dark:hover {
+  color: var(--templanza-verde) !important;
+}
+
+/* Botones */
+.btn-primary {
+  color: #fff;
+  background-color: var(--templanza-verde);
+  border-color: var(--templanza-verde);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--templanza-verde-oscuro);
+  border-color: var(--templanza-verde-oscuro);
+}
+
+.btn-outline-primary {
+  color: var(--templanza-verde);
+  border-color: var(--templanza-verde);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--templanza-verde);
+  border-color: var(--templanza-verde);
+}
+
+.btn-success {
+  background-color: var(--templanza-verde);
+  border-color: var(--templanza-verde);
+}
+
+.btn-success:hover {
+  background-color: var(--templanza-verde-oscuro);
+  border-color: var(--templanza-verde-oscuro);
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: var(--templanza-verde);
+  border-color: var(--templanza-verde-oscuro);
+}
+
+/* Cards */
+.card {
+  border: 1px solid var(--templanza-arena);
+  border-radius: 0.6rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1.25rem rgba(47, 74, 60, 0.15);
+}
+
+.card-title {
+  color: var(--templanza-verde-oscuro);
+}
+
+/* Animación de entrada */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero */
+.hero-templanza {
+  background: linear-gradient(135deg, var(--templanza-beige) 0%, var(--templanza-arena) 100%);
+  border-radius: 1rem;
+}
+
+/* Stepper de cantidad */
+.stepper-cantidad {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--templanza-verde-claro);
+  border-radius: 0.4rem;
+  overflow: hidden;
+}
+
+.stepper-cantidad button {
+  background-color: var(--templanza-beige);
+  border: none;
+  color: var(--templanza-verde-oscuro);
+  font-weight: 700;
+  width: 2rem;
+  line-height: 2rem;
+  padding: 0;
+}
+
+.stepper-cantidad button:hover {
+  background-color: var(--templanza-arena);
+}
+
+.stepper-cantidad input {
+  border: none;
+  text-align: center;
+  width: 3rem;
+  -moz-appearance: textfield;
+}
+
+.stepper-cantidad input::-webkit-outer-spin-button,
+.stepper-cantidad input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Badge del carrito */
+.badge-carrito {
+  background-color: var(--templanza-acento);
+  color: #fff;
+  border-radius: 50rem;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  margin-left: 0.25rem;
+  vertical-align: text-top;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+  background-color: #fff;
+  border-top: 1px solid var(--templanza-arena);
 }

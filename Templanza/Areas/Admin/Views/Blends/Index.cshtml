@@ -8,11 +8,6 @@
     <a asp-action="CreateRecomendado" class="btn btn-primary">Nuevo recomendado</a>
 </div>
 
-@if (TempData["Exito"] is not null)
-{
-    <div class="alert alert-success">@TempData["Exito"]</div>
-}
-
 <table id="tablaRecomendados" class="table table-striped">
     <thead>
         <tr>

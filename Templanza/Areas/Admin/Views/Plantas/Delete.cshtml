@@ -18,7 +18,7 @@
     <dd class="col-sm-9">@Model.Precio.ToString("C")</dd>
 </dl>
 
-<form asp-action="Delete">
+<form asp-action="Delete" data-confirm="¿Eliminar la planta '@Model.NombreComun'? Esta acción no se puede deshacer.">
     <input type="hidden" asp-for="Id" />
     <button type="submit" class="btn btn-danger">Eliminar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>

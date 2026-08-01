@@ -5,15 +5,6 @@
 
 <h1>Tu carrito</h1>
 
-@if (TempData["Exito"] is not null)
-{
-    <div class="alert alert-success">@TempData["Exito"]</div>
-}
-@if (TempData["Error"] is not null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
-
 @if (!Model.Items.Any())
 {
     <p>Tu carrito está vacío.</p>
@@ -38,15 +29,19 @@ else
                     <td>@item.NombreComun</td>
                     <td>@item.Precio.ToString("C")</td>
                     <td>
-                        <form asp-action="ActualizarCantidad" method="post" class="d-flex gap-2">
+                        <form asp-action="ActualizarCantidad" method="post" class="d-flex gap-2 align-items-center">
                             <input type="hidden" name="plantaId" value="@item.PlantaId" />
-                            <input type="number" name="cantidad" value="@item.Cantidad" min="1" max="@item.StockDisponible" class="form-control form-control-sm" style="width: 80px" />
+                            <div class="stepper-cantidad">
+                                <button type="button" data-step="-1">−</button>
+                                <input type="number" name="cantidad" value="@item.Cantidad" min="1" max="@item.StockDisponible" class="stepper-cantidad-input" />
+                                <button type="button" data-step="1">+</button>
+                            </div>
                             <button type="submit" class="btn btn-outline-secondary btn-sm">Actualizar</button>
                         </form>
                     </td>
                     <td>@item.Subtotal.ToString("C")</td>
                     <td>
-                        <form asp-action="Eliminar" method="post">
+                        <form asp-action="Eliminar" method="post" data-confirm="¿Quitar '@item.NombreComun' del carrito?">
                             <input type="hidden" name="plantaId" value="@item.PlantaId" />
                             <button type="submit" class="btn btn-outline-danger btn-sm">Quitar</button>
                         </form>

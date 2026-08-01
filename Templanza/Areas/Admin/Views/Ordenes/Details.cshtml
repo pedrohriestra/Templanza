@@ -6,11 +6,6 @@
 <h1>Orden #@Model.Id</h1>
 <h6 class="text-muted">Cliente: @Model.Usuario?.Nombre (@Model.Usuario?.Email) · @Model.FechaCreacion.ToString("g")</h6>
 
-@if (TempData["Exito"] is not null)
-{
-    <div class="alert alert-success">@TempData["Exito"]</div>
-}
-
 <table class="table">
     <thead>
         <tr>

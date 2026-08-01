@@ -15,7 +15,7 @@
     <dd class="col-sm-10">@Model.Descripcion</dd>
 </dl>
 
-<form asp-action="Delete">
+<form asp-action="Delete" data-confirm="¿Eliminar la categoría '@Model.Nombre'? Esta acción no se puede deshacer.">
     <input type="hidden" asp-for="Id" />
     <button type="submit" class="btn btn-danger">Eliminar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>

@@ -43,10 +43,14 @@
 {
     <form asp-controller="Carrito" asp-action="Agregar" method="post">
         <input type="hidden" name="plantaId" value="@Model.Id" />
-        <div class="row g-2 align-items-end" style="max-width: 300px">
+        <div class="row g-2 align-items-end">
             <div class="col-auto">
-                <label class="form-label">Cantidad</label>
-                <input type="number" name="cantidad" value="1" min="1" max="@Model.Stock" class="form-control" />
+                <label class="form-label d-block">Cantidad</label>
+                <div class="stepper-cantidad">
+                    <button type="button" data-step="-1">−</button>
+                    <input type="number" name="cantidad" value="1" min="1" max="@Model.Stock" class="stepper-cantidad-input" />
+                    <button type="button" data-step="1">+</button>
+                </div>
             </div>
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary">Agregar al carrito</button>

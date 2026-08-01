@@ -9,15 +9,6 @@
     <a asp-action="Create" class="btn btn-primary">Nuevo efecto</a>
 </p>
 
-@if (TempData["Exito"] is not null)
-{
-    <div class="alert alert-success">@TempData["Exito"]</div>
-}
-@if (TempData["Error"] is not null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
-
 <table id="tablaEfectos" class="table table-striped">
     <thead>
         <tr>
