@@ -34,4 +34,24 @@
     </tfoot>
 </table>
 
+@if (Model.Estado == EstadoOrden.Pendiente && !string.IsNullOrWhiteSpace((string?)ViewBag.MercadoPagoLink))
+{
+    <div class="card pago-mp my-4">
+        <div class="card-body text-center">
+            <h5 class="card-title">Completá tu pago</h5>
+            <p class="card-text">Tu pedido queda registrado como <strong>pendiente</strong> hasta que se acredite el pago. Vas a recibir la confirmación una vez que lo verifiquemos.</p>
+
+            <div class="d-none d-md-flex flex-column align-items-center">
+                <p class="mb-2">Escaneá este código con la app de Mercado Pago desde tu celular:</p>
+                <img src="~/images/mercadopago-qr.png" alt="QR de pago Mercado Pago" width="220" height="220" class="border rounded p-2 bg-white" />
+                <a href="@ViewBag.MercadoPagoLink" target="_blank" rel="noopener" class="btn btn-link mt-2">o abrí el link de pago directamente</a>
+            </div>
+
+            <div class="d-md-none">
+                <a href="@ViewBag.MercadoPagoLink" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Pagar con Mercado Pago</a>
+            </div>
+        </div>
+    </div>
+}
+
 <a asp-action="MisOrdenes" class="btn btn-secondary">Volver a mis compras</a>

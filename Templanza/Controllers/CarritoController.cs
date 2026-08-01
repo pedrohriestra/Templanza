@@ -13,10 +13,12 @@ namespace Templanza.Controllers
     public class CarritoController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public CarritoController(ApplicationDbContext context)
+        public CarritoController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         private string UsuarioActualId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
@@ -102,7 +104,7 @@ namespace Templanza.Controllers
             {
                 UsuarioId = UsuarioActualId,
                 FechaCreacion = DateTime.Now,
-                Estado = EstadoOrden.Confirmada
+                Estado = EstadoOrden.Pendiente
             };
 
             foreach (var item in items)
@@ -123,7 +125,7 @@ namespace Templanza.Controllers
             await _context.SaveChangesAsync();
 
             CarritoSesion.Vaciar(HttpContext.Session);
-            TempData["Exito"] = "¡Compra confirmada! Gracias por tu pedido.";
+            TempData["Exito"] = "¡Pedido registrado! Completá el pago con Mercado Pago para que lo confirmemos.";
             return RedirectToAction(nameof(DetalleOrden), new { id = orden.Id });
         }
 
@@ -151,6 +153,7 @@ namespace Templanza.Controllers
                 return Forbid();
             }
 
+            ViewBag.MercadoPagoLink = _configuration["MercadoPago:PaymentLink"];
             return View(orden);
         }
 
