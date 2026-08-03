@@ -2,11 +2,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Templanza.Data;
+using Templanza.Models;
 
 namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Administrador,Operador")]
+    [Authorize(Roles = Roles.Administrador)]
     public class CorreosEnviadosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,6 +20,7 @@ namespace Templanza.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var correos = await _context.CorreosEnviados
+                .AsNoTracking()
                 .OrderByDescending(c => c.FechaEnvio)
                 .ToListAsync();
 
@@ -29,7 +31,7 @@ namespace Templanza.Areas.Admin.Controllers
         {
             if (id is null) return NotFound();
 
-            var correo = await _context.CorreosEnviados.FirstOrDefaultAsync(c => c.Id == id);
+            var correo = await _context.CorreosEnviados.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
             if (correo is null) return NotFound();
 
             return View(correo);
@@ -39,7 +41,7 @@ namespace Templanza.Areas.Admin.Controllers
         {
             if (id is null) return NotFound();
 
-            var correo = await _context.CorreosEnviados.FirstOrDefaultAsync(c => c.Id == id);
+            var correo = await _context.CorreosEnviados.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
             if (correo is null) return NotFound();
 
             return View(correo);

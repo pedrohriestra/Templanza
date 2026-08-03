@@ -9,7 +9,7 @@ using Templanza.Models.ViewModels;
 namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Administrador,Operador")]
+    [Authorize(Roles = Roles.Administrador)]
     public class PlantasController : Controller
     {
         private const int TamanioPagina = 5;

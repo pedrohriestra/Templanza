@@ -86,6 +86,7 @@ app.Use(async (context, next) =>
 
 app.UseSession();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -115,7 +116,7 @@ static async Task SeedRolesYAdminAsync(IServiceProvider serviceProvider)
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    string[] roles = { "Administrador", "Operador", "Cliente" };
+    string[] roles = { Roles.Administrador, Roles.Operador, Roles.Cliente };
     foreach (var rol in roles)
     {
         if (!await roleManager.RoleExistsAsync(rol))
@@ -139,7 +140,7 @@ static async Task SeedRolesYAdminAsync(IServiceProvider serviceProvider)
         var resultado = await userManager.CreateAsync(adminUser, "Admin123!");
         if (resultado.Succeeded)
         {
-            await userManager.AddToRoleAsync(adminUser, "Administrador");
+            await userManager.AddToRoleAsync(adminUser, Roles.Administrador);
         }
     }
 }

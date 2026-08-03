@@ -2,11 +2,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Templanza.Data;
+using Templanza.Models;
 
 namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Administrador,Operador")]
+    [Authorize(Roles = Roles.AdministradorOperador)]
     public class ComentariosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,6 +20,7 @@ namespace Templanza.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var comentarios = await _context.Comentarios
+                .AsNoTracking()
                 .Include(c => c.Blend)
                 .Include(c => c.Usuario)
                 .OrderByDescending(c => c.FechaCreacion)
@@ -32,6 +34,7 @@ namespace Templanza.Areas.Admin.Controllers
             if (id is null) return NotFound();
 
             var comentario = await _context.Comentarios
+                .AsNoTracking()
                 .Include(c => c.Blend)
                 .Include(c => c.Usuario)
                 .FirstOrDefaultAsync(c => c.Id == id);
@@ -46,6 +49,7 @@ namespace Templanza.Areas.Admin.Controllers
             if (id is null) return NotFound();
 
             var comentario = await _context.Comentarios
+                .AsNoTracking()
                 .Include(c => c.Blend)
                 .Include(c => c.Usuario)
                 .FirstOrDefaultAsync(c => c.Id == id);

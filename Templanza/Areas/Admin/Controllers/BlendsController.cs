@@ -10,7 +10,7 @@ using Templanza.Models.ViewModels;
 namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Administrador,Operador")]
+    [Authorize]
     public class BlendsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,6 +23,7 @@ namespace Templanza.Areas.Admin.Controllers
         private string? UsuarioActualId => User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         // Recomendados: recetas oficiales curadas por el Admin.
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Index()
         {
             var blends = await _context.Blends
@@ -35,6 +36,7 @@ namespace Templanza.Areas.Admin.Controllers
         }
 
         // Blends del foro comunitario a la espera de moderación.
+        [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> Pendientes()
         {
             var blends = await _context.Blends
@@ -51,6 +53,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> Aprobar(int id)
         {
             var blend = await _context.Blends.FindAsync(id);
@@ -63,6 +66,7 @@ namespace Templanza.Areas.Admin.Controllers
             return RedirectToAction(nameof(Pendientes));
         }
 
+        [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> Rechazar(int? id)
         {
             if (id is null) return NotFound();
@@ -78,6 +82,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         [HttpPost, ActionName("Rechazar")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> RechazarConfirmado(int id)
         {
             var blend = await _context.Blends.FindAsync(id);
@@ -90,6 +95,7 @@ namespace Templanza.Areas.Admin.Controllers
             return RedirectToAction(nameof(Pendientes));
         }
 
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> CreateRecomendado()
         {
             var viewModel = new BlendViewModel();
@@ -99,6 +105,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> CreateRecomendado(BlendViewModel viewModel)
         {
             if (!viewModel.Plantas.Any(p => p.Seleccionado))
@@ -139,6 +146,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> EditRecomendado(int? id)
         {
             if (id is null) return NotFound();
@@ -163,6 +171,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> EditRecomendado(int id, BlendViewModel viewModel)
         {
             if (id != viewModel.Id) return NotFound();
@@ -220,6 +229,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> DeleteRecomendado(int? id)
         {
             if (id is null) return NotFound();
@@ -235,6 +245,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         [HttpPost, ActionName("DeleteRecomendado")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> DeleteRecomendadoConfirmado(int id)
         {
             var blend = await _context.Blends.FindAsync(id);

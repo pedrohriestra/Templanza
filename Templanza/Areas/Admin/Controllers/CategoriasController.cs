@@ -7,7 +7,7 @@ using Templanza.Models;
 namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Administrador,Operador")]
+    [Authorize(Roles = Roles.Administrador)]
     public class CategoriasController : Controller
     {
         private readonly ApplicationDbContext _context;

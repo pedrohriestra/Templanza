@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Templanza.Data;
+using Templanza.Models;
 using Templanza.Models.ViewModels;
 
 namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Administrador,Operador")]
+    [Authorize(Roles = Roles.AdministradorOperador)]
     public class ReportesController : Controller
     {
         private readonly ApplicationDbContext _context;

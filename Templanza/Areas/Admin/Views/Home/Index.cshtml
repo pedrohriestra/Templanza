@@ -1,90 +1,38 @@
 @{
     ViewData["Title"] = "Panel de administración";
+    bool esAdmin = User.IsInRole("Administrador");
+
+    var tarjetas = new[]
+    {
+        (Titulo: "Categorías", Texto: "Categorías de plantas y blends.", Controller: "Categorias", Action: "Index", Boton: "Gestionar", SoloAdmin: true),
+        (Titulo: "Efectos", Texto: "Catálogo de efectos aplicables a las plantas.", Controller: "Efectos", Action: "Index", Boton: "Gestionar", SoloAdmin: true),
+        (Titulo: "Plantas", Texto: "Catálogo de plantas de la tienda.", Controller: "Plantas", Action: "Index", Boton: "Gestionar", SoloAdmin: true),
+        (Titulo: "Blends pendientes", Texto: "Moderar blends enviados por la comunidad.", Controller: "Blends", Action: "Pendientes", Boton: "Moderar", SoloAdmin: false),
+        (Titulo: "Blends recomendados", Texto: "Recetas oficiales curadas por Templanza.", Controller: "Blends", Action: "Index", Boton: "Gestionar", SoloAdmin: true),
+        (Titulo: "Comentarios", Texto: "Moderar comentarios del foro.", Controller: "Comentarios", Action: "Index", Boton: "Gestionar", SoloAdmin: false),
+        (Titulo: "Órdenes", Texto: "Ver compras de clientes y actualizar su estado.", Controller: "Ordenes", Action: "Index", Boton: "Gestionar", SoloAdmin: false),
+        (Titulo: "Reporte de ventas", Texto: "Ventas por planta en un rango de fechas.", Controller: "Reportes", Action: "VentasPorRango", Boton: "Ver reporte", SoloAdmin: false),
+        (Titulo: "Correos enviados", Texto: "Log de emails de confirmación y recuperación.", Controller: "CorreosEnviados", Action: "Index", Boton: "Ver log", SoloAdmin: true),
+        (Titulo: "Usuarios", Texto: "Alta, baja y modificación de cuentas y roles.", Controller: "Usuarios", Action: "Index", Boton: "Gestionar", SoloAdmin: true),
+    };
 }
 
 <h1>Panel de administración</h1>
 <p class="text-muted">Gestión del catálogo y moderación del foro de Templanza.</p>
 
 <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Categorías</h5>
-                <p class="card-text">Categorías de plantas y blends.</p>
-                <a asp-area="Admin" asp-controller="Categorias" asp-action="Index" class="btn btn-outline-primary">Gestionar</a>
+    @foreach (var tarjeta in tarjetas)
+    {
+        if (tarjeta.SoloAdmin && !esAdmin) continue;
+
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@tarjeta.Titulo</h5>
+                    <p class="card-text">@tarjeta.Texto</p>
+                    <a asp-area="Admin" asp-controller="@tarjeta.Controller" asp-action="@tarjeta.Action" class="btn btn-outline-primary">@tarjeta.Boton</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Efectos</h5>
-                <p class="card-text">Catálogo de efectos aplicables a las plantas.</p>
-                <a asp-area="Admin" asp-controller="Efectos" asp-action="Index" class="btn btn-outline-primary">Gestionar</a>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Plantas</h5>
-                <p class="card-text">Catálogo de plantas de la tienda.</p>
-                <a asp-area="Admin" asp-controller="Plantas" asp-action="Index" class="btn btn-outline-primary">Gestionar</a>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Blends pendientes</h5>
-                <p class="card-text">Moderar blends enviados por la comunidad.</p>
-                <a asp-area="Admin" asp-controller="Blends" asp-action="Pendientes" class="btn btn-outline-primary">Moderar</a>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Blends recomendados</h5>
-                <p class="card-text">Recetas oficiales curadas por Templanza.</p>
-                <a asp-area="Admin" asp-controller="Blends" asp-action="Index" class="btn btn-outline-primary">Gestionar</a>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Órdenes</h5>
-                <p class="card-text">Ver compras de clientes y actualizar su estado.</p>
-                <a asp-area="Admin" asp-controller="Ordenes" asp-action="Index" class="btn btn-outline-primary">Gestionar</a>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Reporte de ventas</h5>
-                <p class="card-text">Ventas por planta en un rango de fechas.</p>
-                <a asp-area="Admin" asp-controller="Reportes" asp-action="VentasPorRango" class="btn btn-outline-primary">Ver reporte</a>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Comentarios</h5>
-                <p class="card-text">Moderar comentarios del foro.</p>
-                <a asp-area="Admin" asp-controller="Comentarios" asp-action="Index" class="btn btn-outline-primary">Gestionar</a>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Correos enviados</h5>
-                <p class="card-text">Log de emails de confirmación y recuperación.</p>
-                <a asp-area="Admin" asp-controller="CorreosEnviados" asp-action="Index" class="btn btn-outline-primary">Ver log</a>
-            </div>
-        </div>
-    </div>
+    }
 </div>
