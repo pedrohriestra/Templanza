@@ -68,6 +68,10 @@ namespace Templanza.Data
                 .HasForeignKey(b => b.UsuarioId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Acelera el foro (Index/Recomendados filtran por estas dos columnas).
+            builder.Entity<Blend>()
+                .HasIndex(b => new { b.EsPublicado, b.EsRecomendado });
+
             // ----- BlendPlanta (N:N Blend <-> Planta, con Cantidad/Unidad) -----
             builder.Entity<BlendPlanta>()
                 .HasKey(bp => new { bp.BlendId, bp.PlantaId });
@@ -132,6 +136,10 @@ namespace Templanza.Data
                 .WithMany()
                 .HasForeignKey(o => o.UsuarioId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Acelera el filtro por rango de fechas del reporte de ventas.
+            builder.Entity<Orden>()
+                .HasIndex(o => o.FechaCreacion);
 
             builder.Entity<ItemOrden>()
                 .Property(io => io.PrecioUnitario)
