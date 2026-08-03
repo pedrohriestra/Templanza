@@ -1,0 +1,36 @@
+@model CorreoEnviado
+@{
+    ViewData["Title"] = "Detalle de correo";
+}
+
+<h1>Detalle de correo</h1>
+
+<dl class="row">
+    <dt class="col-sm-2">Destinatario</dt>
+    <dd class="col-sm-10">@Model.Destinatario</dd>
+
+    <dt class="col-sm-2">Asunto</dt>
+    <dd class="col-sm-10">@Model.Asunto</dd>
+
+    <dt class="col-sm-2">Fecha</dt>
+    <dd class="col-sm-10">@Model.FechaEnvio.ToString("g")</dd>
+
+    <dt class="col-sm-2">Estado</dt>
+    <dd class="col-sm-10">
+        @if (Model.Exito)
+        {
+            <span class="badge bg-success">Enviado</span>
+        }
+        else
+        {
+            <span class="badge bg-danger">Falló</span>
+        }
+    </dd>
+
+    <dt class="col-sm-2">Cuerpo</dt>
+    <dd class="col-sm-10">
+        <div class="border rounded p-3 bg-white">@Html.Raw(Model.Cuerpo)</div>
+    </dd>
+</dl>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

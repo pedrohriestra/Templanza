@@ -1,0 +1,23 @@
+@model Comentario
+@{
+    ViewData["Title"] = "Detalle de comentario";
+}
+
+<h1>Detalle de comentario</h1>
+
+<dl class="row">
+    <dt class="col-sm-2">Blend</dt>
+    <dd class="col-sm-10">@Model.Blend?.Nombre</dd>
+
+    <dt class="col-sm-2">Autor</dt>
+    <dd class="col-sm-10">@Model.Usuario?.Nombre (@Model.Usuario?.Email)</dd>
+
+    <dt class="col-sm-2">Fecha</dt>
+    <dd class="col-sm-10">@Model.FechaCreacion.ToString("g")</dd>
+
+    <dt class="col-sm-2">Texto</dt>
+    <dd class="col-sm-10">@Model.Texto</dd>
+</dl>
+
+<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Eliminar</a>
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

@@ -1,0 +1,44 @@
+@model IEnumerable<Comentario>
+@{
+    ViewData["Title"] = "Comentarios";
+}
+
+<h1>Comentarios del foro</h1>
+<p class="text-muted">Moderación: eliminar comentarios inapropiados de cualquier blend publicado.</p>
+
+<table id="tablaComentarios" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Blend</th>
+            <th>Autor</th>
+            <th>Texto</th>
+            <th>Fecha</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var comentario in Model)
+        {
+            <tr>
+                <td>@comentario.Blend?.Nombre</td>
+                <td>@comentario.Usuario?.Nombre</td>
+                <td>@(comentario.Texto.Length > 80 ? comentario.Texto[..80] + "…" : comentario.Texto)</td>
+                <td>@comentario.FechaCreacion.ToString("g")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@comentario.Id" class="btn btn-sm btn-outline-info">Ver</a>
+                    <a asp-action="Delete" asp-route-id="@comentario.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('#tablaComentarios').DataTable({
+                language: { url: 'https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-ES.json' }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,54 @@
+@model IEnumerable<CorreoEnviado>
+@{
+    ViewData["Title"] = "Correos enviados";
+}
+
+<h1>Correos enviados</h1>
+<p class="text-muted">Log de todos los emails que la aplicación intentó enviar (confirmación de cuenta, recuperación de contraseña, etc).</p>
+
+<table id="tablaCorreos" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Destinatario</th>
+            <th>Asunto</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var correo in Model)
+        {
+            <tr>
+                <td>@correo.Destinatario</td>
+                <td>@correo.Asunto</td>
+                <td>@correo.FechaEnvio.ToString("g")</td>
+                <td>
+                    @if (correo.Exito)
+                    {
+                        <span class="badge bg-success">Enviado</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Falló</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@correo.Id" class="btn btn-sm btn-outline-info">Ver</a>
+                    <a asp-action="Delete" asp-route-id="@correo.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('#tablaCorreos').DataTable({
+                order: [[2, 'desc']],
+                language: { url: 'https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-ES.json' }
+            });
+        });
+    </script>
+}
