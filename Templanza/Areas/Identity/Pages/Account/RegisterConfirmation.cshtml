@@ -1,0 +1,10 @@
+@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Confirmación de registro";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+    Te enviamos un email a <strong>@Model.Email</strong> con un link para confirmar tu cuenta. Revisá tu bandeja de entrada (y la carpeta de spam, por las dudas).
+</p>

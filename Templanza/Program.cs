@@ -1,4 +1,6 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Templanza.Data;
 using Templanza.Models;
@@ -42,8 +44,45 @@ else
     app.UseHsts();
 }
 
+var culturaApp = new[] { new CultureInfo("es-AR") };
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("es-AR"),
+    SupportedCultures = culturaApp,
+    SupportedUICultures = culturaApp
+});
+
 app.UseHttpsRedirection();
 app.UseRouting();
+
+// La app no usa doble factor de autenticación: estas páginas siguen embebidas en el
+// paquete de Identity UI aunque no las scaffoleamos ni las linkeamos, así que se bloquean
+// explícitamente para que no queden accesibles por URL directa.
+string[] rutas2faBloqueadas =
+[
+    "/Identity/Account/LoginWith2fa",
+    "/Identity/Account/LoginWithRecoveryCode",
+    "/Identity/Account/Manage/TwoFactorAuthentication",
+    "/Identity/Account/Manage/EnableAuthenticator",
+    "/Identity/Account/Manage/Disable2fa",
+    "/Identity/Account/Manage/GenerateRecoveryCodes",
+    "/Identity/Account/Manage/ResetAuthenticator",
+    "/Identity/Account/Manage/ShowRecoveryCodes",
+];
+
+app.Use(async (context, next) =>
+{
+    var esRuta2fa = rutas2faBloqueadas.Any(ruta =>
+        context.Request.Path.StartsWithSegments(ruta, StringComparison.OrdinalIgnoreCase));
+
+    if (esRuta2fa)
+    {
+        context.Response.StatusCode = StatusCodes.Status404NotFound;
+        return;
+    }
+
+    await next();
+});
 
 app.UseSession();
 

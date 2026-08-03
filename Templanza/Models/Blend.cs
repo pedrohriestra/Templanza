@@ -6,12 +6,12 @@ namespace Templanza.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(150)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(150, ErrorMessage = "Como máximo {1} caracteres.")]
         public string Nombre { get; set; } = string.Empty;
 
-        [Required]
-        [StringLength(1000)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(1000, ErrorMessage = "Como máximo {1} caracteres.")]
         public string Descripcion { get; set; } = string.Empty;
 
         [Display(Name = "Publicado")]
@@ -20,12 +20,12 @@ namespace Templanza.Models
         [Display(Name = "Recomendado")]
         public bool EsRecomendado { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         [Display(Name = "Categoría")]
         public int CategoriaId { get; set; }
         public Categoria? Categoria { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         public string UsuarioId { get; set; } = string.Empty;
         public ApplicationUser? Usuario { get; set; }
 

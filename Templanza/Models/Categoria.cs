@@ -6,11 +6,11 @@ namespace Templanza.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(100, ErrorMessage = "Como máximo {1} caracteres.")]
         public string Nombre { get; set; } = string.Empty;
 
-        [StringLength(500)]
+        [StringLength(500, ErrorMessage = "Como máximo {1} caracteres.")]
         public string? Descripcion { get; set; }
 
         public ICollection<Planta> Plantas { get; set; } = new List<Planta>();

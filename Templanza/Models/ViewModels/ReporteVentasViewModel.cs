@@ -4,12 +4,12 @@ namespace Templanza.Models.ViewModels
 {
     public class ReporteVentasViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         [DataType(DataType.Date)]
         [Display(Name = "Desde")]
         public DateTime Desde { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         [DataType(DataType.Date)]
         [Display(Name = "Hasta")]
         public DateTime Hasta { get; set; }

@@ -6,20 +6,20 @@ namespace Templanza.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         public int OrdenId { get; set; }
         public Orden? Orden { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         public int PlantaId { get; set; }
         public Planta? Planta { get; set; }
 
-        [Required]
-        [Range(1, int.MaxValue)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debe estar entre {1} y {2}.")]
         public int Cantidad { get; set; }
 
-        [Required]
-        [Range(0.01, 100000)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [Range(0.01, 100000, ErrorMessage = "Debe estar entre {1} y {2}.")]
         [Display(Name = "Precio unitario")]
         public decimal PrecioUnitario { get; set; }
     }

@@ -10,13 +10,13 @@ namespace Templanza.Models
         public int PlantaId { get; set; }
         public Planta? Planta { get; set; }
 
-        [Required]
-        [Range(0.01, 10000)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [Range(0.01, 10000, ErrorMessage = "Debe estar entre {1} y {2}.")]
         [Display(Name = "Cantidad")]
         public decimal Cantidad { get; set; }
 
-        [Required]
-        [StringLength(30)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(30, ErrorMessage = "Como máximo {1} caracteres.")]
         public string Unidad { get; set; } = string.Empty;
     }
 }

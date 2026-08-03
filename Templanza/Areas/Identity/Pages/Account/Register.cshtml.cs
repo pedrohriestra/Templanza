@@ -43,17 +43,17 @@ namespace Templanza.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [StringLength(100)]
+            [Required(ErrorMessage = "Este campo es obligatorio.")]
+            [StringLength(100, ErrorMessage = "Como máximo {1} caracteres.")]
             [Display(Name = "Nombre")]
             public string Nombre { get; set; } = string.Empty;
 
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Este campo es obligatorio.")]
+            [EmailAddress(ErrorMessage = "Ingresá un email válido.")]
             [Display(Name = "Email")]
             public string Email { get; set; } = string.Empty;
 
-            [Required]
+            [Required(ErrorMessage = "Este campo es obligatorio.")]
             [StringLength(100, ErrorMessage = "La {0} debe tener al menos {2} y como máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Contraseña")]

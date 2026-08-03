@@ -7,15 +7,15 @@ namespace Templanza.Models.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(150)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(150, ErrorMessage = "Como máximo {1} caracteres.")]
         public string Nombre { get; set; } = string.Empty;
 
-        [Required]
-        [StringLength(1000)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(1000, ErrorMessage = "Como máximo {1} caracteres.")]
         public string Descripcion { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         [Display(Name = "Categoría")]
         public int CategoriaId { get; set; }
 
@@ -30,10 +30,10 @@ namespace Templanza.Models.ViewModels
         public string NombrePlanta { get; set; } = string.Empty;
         public bool Seleccionado { get; set; }
 
-        [Range(0.01, 10000)]
+        [Range(0.01, 10000, ErrorMessage = "Debe estar entre {1} y {2}.")]
         public decimal Cantidad { get; set; } = 1;
 
-        [StringLength(30)]
+        [StringLength(30, ErrorMessage = "Como máximo {1} caracteres.")]
         public string Unidad { get; set; } = string.Empty;
     }
 }

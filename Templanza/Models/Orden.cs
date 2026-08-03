@@ -6,17 +6,17 @@ namespace Templanza.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         public string UsuarioId { get; set; } = string.Empty;
         public ApplicationUser? Usuario { get; set; }
 
         public DateTime FechaCreacion { get; set; } = DateTime.Now;
 
-        [Required]
-        [Range(0, double.MaxValue)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Debe estar entre {1} y {2}.")]
         public decimal Total { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         public EstadoOrden Estado { get; set; } = EstadoOrden.Pendiente;
 
         public ICollection<ItemOrden> ItemOrdenes { get; set; } = new List<ItemOrden>();

@@ -10,8 +10,8 @@ namespace Templanza.Models
         public int EfectoId { get; set; }
         public Efecto? Efecto { get; set; }
 
-        [Required]
-        [Range(1, 5)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [Range(1, 5, ErrorMessage = "Debe estar entre {1} y {2}.")]
         [Display(Name = "Intensidad")]
         public int Intensidad { get; set; }
     }

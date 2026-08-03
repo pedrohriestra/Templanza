@@ -27,12 +27,12 @@ namespace Templanza.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
-            [StringLength(100)]
+            [Required(ErrorMessage = "Este campo es obligatorio.")]
+            [StringLength(100, ErrorMessage = "Como máximo {1} caracteres.")]
             [Display(Name = "Nombre")]
             public string Nombre { get; set; } = string.Empty;
 
-            [Phone]
+            [Phone(ErrorMessage = "Ingresá un teléfono válido.")]
             [Display(Name = "Teléfono")]
             public string? PhoneNumber { get; set; }
         }

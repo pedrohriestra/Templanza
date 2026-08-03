@@ -6,12 +6,12 @@ namespace Templanza.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(256)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(256, ErrorMessage = "Como máximo {1} caracteres.")]
         public string Destinatario { get; set; } = string.Empty;
 
-        [Required]
-        [StringLength(200)]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(200, ErrorMessage = "Como máximo {1} caracteres.")]
         public string Asunto { get; set; } = string.Empty;
 
         public string? Cuerpo { get; set; }
