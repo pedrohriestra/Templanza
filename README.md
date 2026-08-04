@@ -2,6 +2,8 @@
 
 Trabajo final de la materia de Desarrollo Web. Tienda online de hierbas para té, con un foro comunitario de **blends** (combinaciones de hierbas armadas y compartidas por los usuarios).
 
+🔗 **Demo en vivo:** [templanza.onrender.com](https://templanza.onrender.com)
+
 ## Descripción del proyecto
 
 Templanza combina dos cosas en una sola app:
@@ -17,6 +19,7 @@ Templanza combina dos cosas en una sola app:
 - Envío real de emails (confirmación de cuenta y recuperación de contraseña) vía Gmail SMTP con MailKit
 - Bootstrap 5 + DataTables + SweetAlert2
 - Reporte de ventas resuelto con un stored procedure
+- Dockerizado, desplegado en Render (app) + Somee (SQL Server)
 
 ### Modelo de dominio
 
@@ -24,8 +27,26 @@ Templanza combina dos cosas en una sola app:
 
 ### Roles
 
-- **Administrador** / **Operador**: acceso al backoffice (`/Admin`), gestionan el catálogo, moderan el foro, ven órdenes y el reporte de ventas.
+- **Administrador**: acceso total al backoffice (`/Admin`). Además de todo lo que puede hacer el Operador, es el único que puede crear categorías/efectos/plantas/blends recomendados, gestionar usuarios (alta, roles, confirmación de email) y ver el log de correos enviados.
+- **Operador**: acceso al backoffice para el día a día: puede ver, editar y eliminar Categorías, Efectos, Plantas y Blends recomendados, moderar el foro (aprobar/rechazar blends pendientes), moderar Comentarios, y ver Órdenes y el Reporte de ventas. No puede crear plantas/categorías nuevas ni gestionar usuarios.
 - **Cliente**: rol asignado automáticamente al registrarse. Compra en la tienda y participa del foro.
+
+## Despliegue
+
+La demo en vivo corre containerizada:
+
+- **Base de datos**: SQL Server gratuito en [Somee](https://somee.com), con las migraciones y el data seeding aplicados.
+- **Aplicación**: [Render](https://render.com) como Web Service, buildeado a partir del `Dockerfile` de la raíz del repo (multi-stage: SDK de .NET 9 para compilar, runtime ASP.NET para correr). Al arrancar, la propia app aplica las migraciones pendientes contra la base (`Database.MigrateAsync()`) y siembra roles + usuario administrador si todavía no existen — no hace falta correr nada a mano en el servidor.
+
+Variables de entorno configuradas en Render (no viven en el repo, se cargan desde el panel de Render):
+
+| Variable | Contenido |
+|---|---|
+| `ConnectionStrings__DefaultConnection` | Connection string de la base en Somee |
+| `Smtp__Usuario` | Email de Gmail usado para enviar correos |
+| `Smtp__Password` | Contraseña de aplicación de ese Gmail |
+
+> Nota: el plan free de Render duerme el servicio tras un rato sin tráfico y tarda unos segundos en despertar en el próximo request — es normal si la primera carga tarda un poco.
 
 ## Instalación y ejecución
 
@@ -117,6 +138,14 @@ El link de cobro se configura en `appsettings.json` → `MercadoPago:PaymentLink
 | **Moderación de blends pendientes** | ![Moderación](docs/screenshots/12-admin-blends-pendientes.png) |
 | **Órdenes** (ver compras y cambiar estado) | ![Órdenes admin](docs/screenshots/13-admin-ordenes.png) |
 | **Reporte de ventas** (stored procedure, por rango de fechas) | ![Reporte de ventas](docs/screenshots/14-admin-reporte-ventas.png) |
+
+También desde `/Admin` (sin captura todavía):
+
+- **Efectos**: CRUD del catálogo de efectos aplicables a las plantas.
+- **Blends recomendados**: alta/edición/baja de las recetas oficiales curadas por Templanza.
+- **Comentarios**: moderación de comentarios del foro.
+- **Correos enviados**: log de auditoría de los emails de confirmación/recuperación, con estado de éxito/error.
+- **Usuarios**: alta, baja y edición de cuentas — nombre, email (con confirmación manual), teléfono, contraseña y rol.
 
 ## Integrantes
 
