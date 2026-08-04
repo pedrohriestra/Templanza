@@ -17,6 +17,15 @@
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
+    <div class="mb-3 form-check">
+        <input asp-for="EmailConfirmado" class="form-check-input" />
+        <label asp-for="EmailConfirmado" class="form-check-label"></label>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Telefono" class="form-label"></label>
+        <input asp-for="Telefono" class="form-control" />
+        <span asp-validation-for="Telefono" class="text-danger"></span>
+    </div>
     <div class="mb-3">
         <label asp-for="Rol" class="form-label"></label>
         <select asp-for="Rol" asp-items="Model.Roles" class="form-select">

@@ -7,7 +7,7 @@ using Templanza.Models;
 namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = Roles.Administrador)]
+    [Authorize(Roles = Roles.AdministradorOperador)]
     public class EfectosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -32,6 +32,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(efecto);
         }
 
+        [Authorize(Roles = Roles.Administrador)]
         public IActionResult Create()
         {
             return View();
@@ -39,6 +40,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Create([Bind("Nombre,Descripcion")] Efecto efecto)
         {
             if (ModelState.IsValid)

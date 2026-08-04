@@ -9,7 +9,7 @@ using Templanza.Models.ViewModels;
 namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = Roles.Administrador)]
+    [Authorize(Roles = Roles.AdministradorOperador)]
     public class PlantasController : Controller
     {
         private const int TamanioPagina = 5;
@@ -67,6 +67,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(planta);
         }
 
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Create()
         {
             var viewModel = new PlantaViewModel();
@@ -76,6 +77,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Create(PlantaViewModel viewModel)
         {
             if (ModelState.IsValid)

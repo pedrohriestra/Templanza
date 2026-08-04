@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,14 @@ using Templanza.Models;
 using Templanza.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Render (y hosts similares tipo Heroku/Railway) asignan el puerto vía la variable de
+// entorno PORT en tiempo de ejecución, en vez de un puerto fijo como en desarrollo local.
+var puertoAsignado = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(puertoAsignado))
+{
+    builder.WebHost.UseUrls($"http://+:{puertoAsignado}");
+}
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -31,6 +40,15 @@ builder.Services.AddSession(options =>
 });
 
 var app = builder.Build();
+
+// Render termina el HTTPS en su propio proxy y le reenvía la request al contenedor por
+// HTTP simple, agregando X-Forwarded-Proto/X-Forwarded-For. Sin este middleware, ASP.NET
+// Core cree que toda request es insegura (rompe UseHsts/UseHttpsRedirection y los links
+// absolutos que arma Identity para los emails de confirmación).
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -106,6 +124,9 @@ app.MapRazorPages()
 
 using (var scope = app.Services.CreateScope())
 {
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await dbContext.Database.MigrateAsync();
+
     await SeedRolesYAdminAsync(scope.ServiceProvider);
 }
 

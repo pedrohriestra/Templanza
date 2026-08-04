@@ -16,6 +16,14 @@ namespace Templanza.Models.ViewModels
         [EmailAddress(ErrorMessage = "Ingresá un email válido.")]
         public string Email { get; set; } = string.Empty;
 
+        [Display(Name = "Email confirmado")]
+        public bool EmailConfirmado { get; set; }
+
+        [Phone(ErrorMessage = "Ingresá un teléfono válido.")]
+        [StringLength(30, ErrorMessage = "Como máximo {1} caracteres.")]
+        [Display(Name = "Teléfono")]
+        public string? Telefono { get; set; }
+
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         [Display(Name = "Rol")]
         public string Rol { get; set; } = string.Empty;
@@ -36,5 +44,6 @@ namespace Templanza.Models.ViewModels
         public string Email { get; set; } = string.Empty;
         public string Roles { get; set; } = string.Empty;
         public bool EmailConfirmed { get; set; }
+        public string? Telefono { get; set; }
     }
 }

@@ -5,9 +5,12 @@
 
 <h1>Efectos</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Nuevo efecto</a>
-</p>
+@if (User.IsInRole("Administrador"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Nuevo efecto</a>
+    </p>
+}
 
 <table id="tablaEfectos" class="table table-striped">
     <thead>
@@ -24,8 +27,8 @@
                 <td>@item.Nombre</td>
                 <td>@item.Descripcion</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Detalles</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
                 </td>
             </tr>

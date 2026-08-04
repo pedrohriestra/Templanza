@@ -22,8 +22,9 @@ namespace Templanza.Areas.Admin.Controllers
 
         private string? UsuarioActualId => User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        // Recomendados: recetas oficiales curadas por el Admin.
-        [Authorize(Roles = Roles.Administrador)]
+        // Recomendados: recetas oficiales curadas por el Admin. El Operador puede verlas,
+        // pero gestionarlas (Create/Edit/Delete) sigue restringido al Administrador.
+        [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> Index()
         {
             var blends = await _context.Blends
@@ -146,7 +147,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles = Roles.Administrador)]
+        [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> EditRecomendado(int? id)
         {
             if (id is null) return NotFound();
@@ -171,7 +172,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = Roles.Administrador)]
+        [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> EditRecomendado(int id, BlendViewModel viewModel)
         {
             if (id != viewModel.Id) return NotFound();
@@ -229,7 +230,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles = Roles.Administrador)]
+        [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> DeleteRecomendado(int? id)
         {
             if (id is null) return NotFound();
@@ -245,7 +246,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         [HttpPost, ActionName("DeleteRecomendado")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = Roles.Administrador)]
+        [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> DeleteRecomendadoConfirmado(int id)
         {
             var blend = await _context.Blends.FindAsync(id);

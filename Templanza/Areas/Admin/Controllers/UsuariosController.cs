@@ -43,7 +43,8 @@ namespace Templanza.Areas.Admin.Controllers
                 Nombre = usuario.Nombre,
                 Email = usuario.Email ?? string.Empty,
                 Roles = rolesPorUsuarioId.TryGetValue(usuario.Id, out var roles) ? roles : string.Empty,
-                EmailConfirmed = usuario.EmailConfirmed
+                EmailConfirmed = usuario.EmailConfirmed,
+                Telefono = usuario.PhoneNumber
             }).ToList();
 
             return View(lista);
@@ -62,7 +63,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var viewModel = new UsuarioViewModel();
+            var viewModel = new UsuarioViewModel { EmailConfirmado = true };
             await CargarRolesAsync(viewModel);
             return View(viewModel);
         }
@@ -88,7 +89,8 @@ namespace Templanza.Areas.Admin.Controllers
                     UserName = viewModel.Email,
                     Email = viewModel.Email,
                     Nombre = viewModel.Nombre,
-                    EmailConfirmed = true
+                    PhoneNumber = viewModel.Telefono,
+                    EmailConfirmed = viewModel.EmailConfirmado
                 };
 
                 var resultado = await _userManager.CreateAsync(usuario, viewModel.Password!);
@@ -132,6 +134,8 @@ namespace Templanza.Areas.Admin.Controllers
                 Id = usuario.Id,
                 Nombre = usuario.Nombre,
                 Email = usuario.Email ?? string.Empty,
+                EmailConfirmado = usuario.EmailConfirmed,
+                Telefono = usuario.PhoneNumber,
                 Rol = roles.FirstOrDefault() ?? string.Empty
             };
 
@@ -179,10 +183,26 @@ namespace Templanza.Areas.Admin.Controllers
                         return View(viewModel);
                     }
                 }
-                else
+
+                if (!string.Equals(usuario.PhoneNumber, viewModel.Telefono))
                 {
-                    await _userManager.UpdateAsync(usuario);
+                    var resultadoTelefono = await _userManager.SetPhoneNumberAsync(usuario, viewModel.Telefono);
+                    if (!resultadoTelefono.Succeeded)
+                    {
+                        foreach (var error in resultadoTelefono.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        await CargarRolesAsync(viewModel);
+                        return View(viewModel);
+                    }
                 }
+
+                // Override manual del Admin: puede confirmar o desconfirmar el email a mano
+                // (por ejemplo, para destrabar una cuenta que quedó sin confirmar), sin pasar
+                // por el flujo normal de token de confirmación por correo.
+                usuario.EmailConfirmed = viewModel.EmailConfirmado;
+                await _userManager.UpdateAsync(usuario);
 
                 if (!string.IsNullOrWhiteSpace(viewModel.Password))
                 {

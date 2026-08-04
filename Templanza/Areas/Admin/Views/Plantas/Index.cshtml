@@ -8,9 +8,12 @@
 
 <h1>Plantas</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Nueva planta</a>
-</p>
+@if (User.IsInRole("Administrador"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Nueva planta</a>
+    </p>
+}
 
 <form asp-action="Index" method="get" class="row g-2 mb-3">
     <div class="col-auto">
@@ -43,8 +46,8 @@
                 <td>@item.Precio.ToString("C")</td>
                 <td>@item.Stock</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Detalles</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
                 </td>
             </tr>
