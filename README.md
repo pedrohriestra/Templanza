@@ -4,6 +4,14 @@ Trabajo final de la materia de Desarrollo Web. Tienda online de hierbas para té
 
 🔗 **Demo en vivo:** [templanza.onrender.com](https://templanza.onrender.com)
 
+### Credenciales de acceso (demo en vivo)
+
+| Rol | Email | Contraseña |
+|---|---|---|
+| Administrador | `admin@templanza.com` | `Admin123!` |
+
+> El plan free de Render duerme el servicio tras un rato sin tráfico; si la primera carga tarda unos segundos en responder, es normal.
+
 ## Descripción del proyecto
 
 Templanza combina dos cosas en una sola app:
