@@ -104,7 +104,8 @@ namespace Templanza.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
+                        TempData["Exito"] = "Cuenta creada. Te enviamos un email para confirmar tu cuenta.";
+                        return RedirectToPage("/Account/Login", new { area = "Identity" });
                     }
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
