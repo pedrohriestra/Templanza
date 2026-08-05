@@ -8,6 +8,7 @@ namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = Roles.Administrador)]
+    // Log de auditoría de los emails enviados por la app.
     public class CorreosEnviadosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,6 +18,7 @@ namespace Templanza.Areas.Admin.Controllers
             _context = context;
         }
 
+        // Listado de correos enviados, más recientes primero.
         public async Task<IActionResult> Index()
         {
             var correos = await _context.CorreosEnviados
@@ -27,6 +29,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(correos);
         }
 
+        // Detalle de un correo enviado.
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null) return NotFound();
@@ -37,6 +40,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(correo);
         }
 
+        // Pantalla de confirmación de borrado.
         public async Task<IActionResult> Delete(int? id)
         {
             if (id is null) return NotFound();
@@ -47,6 +51,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(correo);
         }
 
+        // Borra el registro del correo.
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

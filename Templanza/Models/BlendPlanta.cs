@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models
 {
+    // Línea de receta: qué planta y cuánta cantidad lleva un blend.
     public class BlendPlanta
     {
         public int BlendId { get; set; }

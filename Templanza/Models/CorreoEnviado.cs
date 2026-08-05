@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models
 {
+    // Log de cada email enviado por la app (éxito o error).
     public class CorreoEnviado
     {
         public int Id { get; set; }

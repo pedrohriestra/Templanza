@@ -11,6 +11,7 @@ namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = Roles.Administrador)]
+    // ABM de usuarios: datos, rol, contraseña y confirmación de email.
     public class UsuariosController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -24,6 +25,7 @@ namespace Templanza.Areas.Admin.Controllers
             _context = context;
         }
 
+        // Listado de usuarios con su rol, en una sola consulta (evita N+1).
         public async Task<IActionResult> Index()
         {
             var usuarios = await _userManager.Users.OrderBy(u => u.Email).ToListAsync();
@@ -50,6 +52,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(lista);
         }
 
+        // Ficha de un usuario con su rol.
         public async Task<IActionResult> Details(string? id)
         {
             if (id is null) return NotFound();
@@ -61,6 +64,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(usuario);
         }
 
+        // Formulario de alta.
         public async Task<IActionResult> Create()
         {
             var viewModel = new UsuarioViewModel { EmailConfirmado = true };
@@ -68,6 +72,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Crea el usuario en Identity y le asigna el rol elegido.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(UsuarioViewModel viewModel)
@@ -121,6 +126,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Formulario de edición, precargado con los datos actuales.
         public async Task<IActionResult> Edit(string? id)
         {
             if (id is null) return NotFound();
@@ -143,6 +149,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Actualiza nombre, email, teléfono, confirmación, contraseña y rol.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, UsuarioViewModel viewModel)
@@ -198,9 +205,7 @@ namespace Templanza.Areas.Admin.Controllers
                     }
                 }
 
-                // Override manual del Admin: puede confirmar o desconfirmar el email a mano
-                // (por ejemplo, para destrabar una cuenta que quedó sin confirmar), sin pasar
-                // por el flujo normal de token de confirmación por correo.
+                // Confirmación de email editable manualmente por el Admin.
                 usuario.EmailConfirmed = viewModel.EmailConfirmado;
                 await _userManager.UpdateAsync(usuario);
 
@@ -256,6 +261,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Pantalla de confirmación de borrado.
         public async Task<IActionResult> Delete(string? id)
         {
             if (id is null) return NotFound();
@@ -268,6 +274,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        // Borra el usuario (nunca la propia cuenta logueada).
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (id == _userManager.GetUserId(User))
@@ -286,6 +293,7 @@ namespace Templanza.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Llena el dropdown de roles del formulario.
         private async Task CargarRolesAsync(UsuarioViewModel viewModel)
         {
             viewModel.Roles = await _roleManager.Roles

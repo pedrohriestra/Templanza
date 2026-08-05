@@ -8,6 +8,7 @@ namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = Roles.AdministradorOperador)]
+    // CRUD de Categorías (crear es solo Administrador; ver/editar/borrar, ambos roles).
     public class CategoriasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,11 +18,13 @@ namespace Templanza.Areas.Admin.Controllers
             _context = context;
         }
 
+        // Listado de categorías.
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categorias.OrderBy(c => c.Nombre).ToListAsync());
         }
 
+        // Ficha de una categoría.
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null) return NotFound();
@@ -32,12 +35,14 @@ namespace Templanza.Areas.Admin.Controllers
             return View(categoria);
         }
 
+        // Formulario de alta.
         [Authorize(Roles = Roles.Administrador)]
         public IActionResult Create()
         {
             return View();
         }
 
+        // Guarda la categoría nueva.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Administrador)]
@@ -53,6 +58,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(categoria);
         }
 
+        // Formulario de edición.
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null) return NotFound();
@@ -63,6 +69,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(categoria);
         }
 
+        // Guarda los cambios de la categoría.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion")] Categoria categoria)
@@ -88,6 +95,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(categoria);
         }
 
+        // Pantalla de confirmación de borrado.
         public async Task<IActionResult> Delete(int? id)
         {
             if (id is null) return NotFound();
@@ -98,6 +106,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(categoria);
         }
 
+        // Borra la categoría (falla controlado si tiene plantas/blends asociados).
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

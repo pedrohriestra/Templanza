@@ -1,5 +1,6 @@
 namespace Templanza.Models
 {
+    // Fila de resultado del stored procedure de reporte de ventas.
     public class ReporteVentasItem
     {
         public int PlantaId { get; set; }

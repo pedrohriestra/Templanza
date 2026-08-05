@@ -10,6 +10,7 @@ namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = Roles.AdministradorOperador)]
+    // CRUD de Plantas, con búsqueda/paginación manuales y checklist de Efectos.
     public class PlantasController : Controller
     {
         private const int TamanioPagina = 5;
@@ -52,6 +53,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(plantas);
         }
 
+        // Ficha de una planta con sus efectos.
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null) return NotFound();
@@ -67,6 +69,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(planta);
         }
 
+        // Formulario de alta.
         [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> Create()
         {
@@ -75,6 +78,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Guarda la planta nueva con sus efectos seleccionados.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Administrador)]
@@ -113,6 +117,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Formulario de edición, con los efectos actuales precargados.
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null) return NotFound();
@@ -140,6 +145,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Guarda los cambios de la planta y actualiza su lista de efectos.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, PlantaViewModel viewModel)
@@ -207,6 +213,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Pantalla de confirmación de borrado.
         public async Task<IActionResult> Delete(int? id)
         {
             if (id is null) return NotFound();
@@ -220,6 +227,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(planta);
         }
 
+        // Borra la planta (falla controlado si está en blends u órdenes).
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -241,6 +249,7 @@ namespace Templanza.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Llena el dropdown de Categorías y el checklist de Efectos del formulario.
         private async Task CargarListasAsync(PlantaViewModel viewModel, ICollection<PlantaEfecto>? seleccionActual = null)
         {
             viewModel.Categorias = await _context.Categorias

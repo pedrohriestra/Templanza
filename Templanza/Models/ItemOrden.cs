@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models
 {
+    // Línea de una Orden ya confirmada, con precio congelado.
     public class ItemOrden
     {
         public int Id { get; set; }

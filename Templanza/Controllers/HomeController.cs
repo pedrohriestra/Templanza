@@ -13,11 +13,13 @@ namespace Templanza.Controllers
             _logger = logger;
         }
 
+        // Portada del sitio.
         public IActionResult Index()
         {
             return View();
         }
 
+        // Página de error genérica, sin cachear.
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

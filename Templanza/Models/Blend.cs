@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models
 {
+    // Receta del foro o recomendada por el Admin (según EsRecomendado).
     public class Blend
     {
         public int Id { get; set; }

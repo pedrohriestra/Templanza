@@ -9,6 +9,7 @@ using Templanza.Services;
 
 namespace Templanza.Controllers
 {
+    // Carrito de compras y checkout.
     [Authorize]
     public class CarritoController : Controller
     {
@@ -23,12 +24,14 @@ namespace Templanza.Controllers
 
         private string UsuarioActualId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
+        // Muestra el carrito actual con precios y stock vigentes.
         public async Task<IActionResult> Index()
         {
             var viewModel = await ConstruirViewModelAsync();
             return View(viewModel);
         }
 
+        // Agrega una planta al carrito, limitando la cantidad al stock.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Agregar(int plantaId, int cantidad)
@@ -52,6 +55,7 @@ namespace Templanza.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Cambia la cantidad de un item (lo elimina si llega a 0).
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ActualizarCantidad(int plantaId, int cantidad)
@@ -67,6 +71,7 @@ namespace Templanza.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Saca un item del carrito.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Eliminar(int plantaId)
@@ -75,6 +80,7 @@ namespace Templanza.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Convierte el carrito en una Orden: valida stock, congela precios y descuenta stock.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Confirmar()
@@ -129,6 +135,7 @@ namespace Templanza.Controllers
             return RedirectToAction(nameof(DetalleOrden), new { id = orden.Id });
         }
 
+        // Historial de compras del usuario logueado.
         public async Task<IActionResult> MisOrdenes()
         {
             var ordenes = await _context.Ordenes
@@ -139,6 +146,7 @@ namespace Templanza.Controllers
             return View(ordenes);
         }
 
+        // Detalle de una orden puntual (solo el dueño o un Admin/Operador).
         public async Task<IActionResult> DetalleOrden(int id)
         {
             var orden = await _context.Ordenes
@@ -157,6 +165,7 @@ namespace Templanza.Controllers
             return View(orden);
         }
 
+        // Arma el ViewModel del carrito cruzando la sesión con los datos actuales de cada planta.
         private async Task<CarritoViewModel> ConstruirViewModelAsync()
         {
             var items = CarritoSesion.Obtener(HttpContext.Session);

@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models
 {
+    // Comentario de un usuario sobre un blend publicado.
     public class Comentario
     {
         public int Id { get; set; }

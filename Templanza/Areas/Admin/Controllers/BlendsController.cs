@@ -9,6 +9,7 @@ using Templanza.Models.ViewModels;
 
 namespace Templanza.Areas.Admin.Controllers
 {
+    // Moderación del foro y gestión de blends recomendados.
     [Area("Admin")]
     [Authorize]
     public class BlendsController : Controller
@@ -22,8 +23,7 @@ namespace Templanza.Areas.Admin.Controllers
 
         private string? UsuarioActualId => User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        // Recomendados: recetas oficiales curadas por el Admin. El Operador puede verlas,
-        // pero gestionarlas (Create/Edit/Delete) sigue restringido al Administrador.
+        // Listado de recomendados (Administrador y Operador).
         [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> Index()
         {
@@ -52,6 +52,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(blends);
         }
 
+        // Publica un blend pendiente en el foro.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.AdministradorOperador)]
@@ -67,6 +68,7 @@ namespace Templanza.Areas.Admin.Controllers
             return RedirectToAction(nameof(Pendientes));
         }
 
+        // Pantalla de confirmación de rechazo.
         [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> Rechazar(int? id)
         {
@@ -81,6 +83,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(blend);
         }
 
+        // Rechaza y borra el blend pendiente.
         [HttpPost, ActionName("Rechazar")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.AdministradorOperador)]
@@ -96,6 +99,7 @@ namespace Templanza.Areas.Admin.Controllers
             return RedirectToAction(nameof(Pendientes));
         }
 
+        // Formulario de alta de un blend recomendado.
         [Authorize(Roles = Roles.Administrador)]
         public async Task<IActionResult> CreateRecomendado()
         {
@@ -104,6 +108,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Guarda el blend recomendado, ya publicado.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Administrador)]
@@ -147,6 +152,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Formulario de edición de un blend recomendado.
         [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> EditRecomendado(int? id)
         {
@@ -170,6 +176,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Guarda los cambios y actualiza la receta del blend recomendado.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.AdministradorOperador)]
@@ -230,6 +237,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        // Pantalla de confirmación de borrado.
         [Authorize(Roles = Roles.AdministradorOperador)]
         public async Task<IActionResult> DeleteRecomendado(int? id)
         {
@@ -244,6 +252,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(blend);
         }
 
+        // Borra el blend recomendado.
         [HttpPost, ActionName("DeleteRecomendado")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.AdministradorOperador)]
@@ -259,6 +268,7 @@ namespace Templanza.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Llena el dropdown de Categorías y el checklist de Plantas del formulario.
         private async Task CargarListasAsync(BlendViewModel viewModel, ICollection<BlendPlanta>? seleccionActual = null)
         {
             viewModel.Categorias = await _context.Categorias

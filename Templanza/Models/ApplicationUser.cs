@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Templanza.Models
 {
+    // Usuario de Identity extendido con datos propios del dominio.
     public class ApplicationUser : IdentityUser
     {
         [Required(ErrorMessage = "Este campo es obligatorio.")]

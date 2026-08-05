@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Templanza.Models.ViewModels
 {
+    // Formulario de alta/edición de un usuario desde el Admin.
     public class UsuarioViewModel
     {
         public string? Id { get; set; }
@@ -37,6 +38,7 @@ namespace Templanza.Models.ViewModels
         public List<SelectListItem> Roles { get; set; } = new();
     }
 
+    // Fila del listado de usuarios (Index).
     public class UsuarioListItemViewModel
     {
         public string Id { get; set; } = string.Empty;

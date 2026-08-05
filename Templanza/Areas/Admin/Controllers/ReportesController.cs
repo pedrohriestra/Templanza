@@ -9,6 +9,7 @@ namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = Roles.AdministradorOperador)]
+    // Reporte de ventas resuelto con un stored procedure.
     public class ReportesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -18,6 +19,7 @@ namespace Templanza.Areas.Admin.Controllers
             _context = context;
         }
 
+        // Ejecuta el SP de ventas por rango de fechas (últimos 30 días por defecto).
         public async Task<IActionResult> VentasPorRango(DateTime? desde, DateTime? hasta)
         {
             var hoy = DateTime.Today;

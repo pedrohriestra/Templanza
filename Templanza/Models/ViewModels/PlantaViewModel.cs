@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Templanza.Models.ViewModels
 {
+    // Formulario de alta/edición de una Planta.
     public class PlantaViewModel
     {
         public int Id { get; set; }
@@ -44,6 +45,7 @@ namespace Templanza.Models.ViewModels
         public List<PlantaEfectoItemViewModel> Efectos { get; set; } = new();
     }
 
+    // Un renglón del checklist de efectos dentro del formulario de Planta.
     public class PlantaEfectoItemViewModel
     {
         public int EfectoId { get; set; }

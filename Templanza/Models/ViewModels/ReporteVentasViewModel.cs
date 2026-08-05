@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models.ViewModels
 {
+    // Filtro de fechas + resultados del reporte de ventas.
     public class ReporteVentasViewModel
     {
         [Required(ErrorMessage = "Este campo es obligatorio.")]

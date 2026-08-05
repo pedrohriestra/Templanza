@@ -3,6 +3,7 @@ using Templanza.Services;
 
 namespace Templanza.ViewComponents
 {
+    // Muestra en el navbar cuántos items hay en el carrito.
     public class CarritoBadgeViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()

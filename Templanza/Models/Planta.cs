@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models
 {
+    // Producto de la tienda (hierba individual).
     public class Planta
     {
         public int Id { get; set; }

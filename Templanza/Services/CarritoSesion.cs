@@ -4,10 +4,12 @@ using Templanza.Models;
 
 namespace Templanza.Services
 {
+    // Lee/escribe el carrito de compras en la Sesión (no en la base).
     public static class CarritoSesion
     {
         private const string ClaveSesion = "Carrito";
 
+        // Devuelve los items guardados en la sesión actual.
         public static List<ItemCarrito> Obtener(ISession session)
         {
             var json = session.GetString(ClaveSesion);
@@ -20,6 +22,7 @@ namespace Templanza.Services
             session.SetString(ClaveSesion, JsonSerializer.Serialize(items));
         }
 
+        // Suma cantidad a una planta ya en el carrito, o la agrega si no estaba.
         public static void Agregar(ISession session, int plantaId, int cantidad)
         {
             var items = Obtener(session);
@@ -35,6 +38,7 @@ namespace Templanza.Services
             Guardar(session, items);
         }
 
+        // Cambia la cantidad de una planta ya agregada.
         public static void ActualizarCantidad(ISession session, int plantaId, int cantidad)
         {
             var items = Obtener(session);
@@ -46,6 +50,7 @@ namespace Templanza.Services
             Guardar(session, items);
         }
 
+        // Saca una planta del carrito.
         public static void Eliminar(ISession session, int plantaId)
         {
             var items = Obtener(session);
@@ -53,6 +58,7 @@ namespace Templanza.Services
             Guardar(session, items);
         }
 
+        // Vacía el carrito (se llama al confirmar la compra).
         public static void Vaciar(ISession session)
         {
             session.Remove(ClaveSesion);

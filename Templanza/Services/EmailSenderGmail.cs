@@ -6,6 +6,7 @@ using Templanza.Models;
 
 namespace Templanza.Services
 {
+    // Manda emails reales por Gmail SMTP y deja registro en CorreoEnviado.
     public class EmailSenderGmail : IEmailSender
     {
         private readonly IConfiguration _configuration;

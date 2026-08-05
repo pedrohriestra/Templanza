@@ -4,6 +4,7 @@ using Templanza.Data;
 
 namespace Templanza.Controllers
 {
+    // Catálogo público de la tienda.
     public class PlantasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -13,6 +14,7 @@ namespace Templanza.Controllers
             _context = context;
         }
 
+        // Lista de plantas, con filtro opcional por categoría.
         public async Task<IActionResult> Index(int? categoriaId)
         {
             var query = _context.Plantas
@@ -31,6 +33,7 @@ namespace Templanza.Controllers
             return View(plantas);
         }
 
+        // Ficha de una planta con sus efectos.
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null) return NotFound();

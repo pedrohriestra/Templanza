@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models
 {
+    // Propiedad (relajante, digestivo, etc.) asignable a una Planta.
     public class Efecto
     {
         public int Id { get; set; }

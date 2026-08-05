@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Templanza.Models.ViewModels
 {
+    // Formulario de alta/edición de un Blend.
     public class BlendViewModel
     {
         public int Id { get; set; }
@@ -24,6 +25,7 @@ namespace Templanza.Models.ViewModels
         public List<BlendPlantaItemViewModel> Plantas { get; set; } = new();
     }
 
+    // Un renglón del checklist de plantas dentro del formulario de Blend.
     public class BlendPlantaItemViewModel
     {
         public int PlantaId { get; set; }

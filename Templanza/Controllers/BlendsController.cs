@@ -9,6 +9,7 @@ using Templanza.Models.ViewModels;
 
 namespace Templanza.Controllers
 {
+    // Foro público de blends: listado, detalle, creación, comentarios y likes.
     public class BlendsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -49,6 +50,7 @@ namespace Templanza.Controllers
             return View(blends);
         }
 
+        // Detalle de un blend, con receta, comentarios y likes.
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null) return NotFound();
@@ -75,6 +77,7 @@ namespace Templanza.Controllers
             return View(blend);
         }
 
+        // Blends creados por el usuario logueado.
         [Authorize]
         public async Task<IActionResult> MisBlends()
         {
@@ -87,6 +90,7 @@ namespace Templanza.Controllers
             return View(blends);
         }
 
+        // Formulario para armar un blend nuevo.
         [Authorize]
         public async Task<IActionResult> Create()
         {
@@ -95,6 +99,7 @@ namespace Templanza.Controllers
             return View(viewModel);
         }
 
+        // Guarda el blend nuevo, pendiente de moderación.
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -138,6 +143,7 @@ namespace Templanza.Controllers
             return View(viewModel);
         }
 
+        // Agrega un comentario a un blend publicado.
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -161,6 +167,7 @@ namespace Templanza.Controllers
             return RedirectToAction(nameof(Details), new { id = blendId });
         }
 
+        // Da o saca el like del usuario actual (toggle).
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -186,6 +193,7 @@ namespace Templanza.Controllers
             return RedirectToAction(nameof(Details), new { id = blendId });
         }
 
+        // Llena las listas de Categorías y Plantas para el formulario.
         private async Task CargarListasAsync(BlendViewModel viewModel)
         {
             viewModel.Categorias = await _context.Categorias

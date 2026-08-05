@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models
 {
+    // Clasificación compartida por Plantas y Blends.
     public class Categoria
     {
         public int Id { get; set; }

@@ -8,6 +8,7 @@ namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = Roles.AdministradorOperador)]
+    // CRUD de Efectos (crear es solo Administrador; ver/editar/borrar, ambos roles).
     public class EfectosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,11 +18,13 @@ namespace Templanza.Areas.Admin.Controllers
             _context = context;
         }
 
+        // Listado de efectos.
         public async Task<IActionResult> Index()
         {
             return View(await _context.Efectos.OrderBy(e => e.Nombre).ToListAsync());
         }
 
+        // Ficha de un efecto.
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null) return NotFound();
@@ -32,12 +35,14 @@ namespace Templanza.Areas.Admin.Controllers
             return View(efecto);
         }
 
+        // Formulario de alta.
         [Authorize(Roles = Roles.Administrador)]
         public IActionResult Create()
         {
             return View();
         }
 
+        // Guarda el efecto nuevo.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Administrador)]
@@ -53,6 +58,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(efecto);
         }
 
+        // Formulario de edición.
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null) return NotFound();
@@ -63,6 +69,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(efecto);
         }
 
+        // Guarda los cambios del efecto.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion")] Efecto efecto)
@@ -88,6 +95,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(efecto);
         }
 
+        // Pantalla de confirmación de borrado.
         public async Task<IActionResult> Delete(int? id)
         {
             if (id is null) return NotFound();
@@ -98,6 +106,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(efecto);
         }
 
+        // Borra el efecto (falla controlado si está asociado a alguna planta).
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

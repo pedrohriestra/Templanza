@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models
 {
+    // Compra confirmada por un usuario, con su lista de ItemOrden.
     public class Orden
     {
         public int Id { get; set; }

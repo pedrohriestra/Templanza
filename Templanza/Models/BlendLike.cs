@@ -1,5 +1,6 @@
 namespace Templanza.Models
 {
+    // Relación N:N: a qué usuarios les gusta qué blend.
     public class BlendLike
     {
         public int BlendId { get; set; }

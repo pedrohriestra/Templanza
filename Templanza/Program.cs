@@ -9,8 +9,7 @@ using Templanza.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Render (y hosts similares tipo Heroku/Railway) asignan el puerto vía la variable de
-// entorno PORT en tiempo de ejecución, en vez de un puerto fijo como en desarrollo local.
+// Puerto asignado dinámicamente por el hosting (Render).
 var puertoAsignado = Environment.GetEnvironmentVariable("PORT");
 if (!string.IsNullOrEmpty(puertoAsignado))
 {
@@ -41,10 +40,7 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
-// Render termina el HTTPS en su propio proxy y le reenvía la request al contenedor por
-// HTTP simple, agregando X-Forwarded-Proto/X-Forwarded-For. Sin este middleware, ASP.NET
-// Core cree que toda request es insegura (rompe UseHsts/UseHttpsRedirection y los links
-// absolutos que arma Identity para los emails de confirmación).
+// Reconoce el esquema/IP originales detrás del proxy de Render.
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -122,6 +118,7 @@ app.MapControllerRoute(
 app.MapRazorPages()
    .WithStaticAssets();
 
+// Aplica migraciones pendientes y siembra roles/admin al arrancar.
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -132,6 +129,7 @@ using (var scope = app.Services.CreateScope())
 
 app.Run();
 
+// Crea los 3 roles y un usuario Administrador si todavía no existen.
 static async Task SeedRolesYAdminAsync(IServiceProvider serviceProvider)
 {
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();

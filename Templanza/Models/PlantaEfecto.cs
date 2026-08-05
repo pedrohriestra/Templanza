@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Templanza.Models
 {
+    // Relación Planta-Efecto con su intensidad (1 a 5).
     public class PlantaEfecto
     {
         public int PlantaId { get; set; }

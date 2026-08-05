@@ -8,6 +8,7 @@ namespace Templanza.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = Roles.AdministradorOperador)]
+    // Gestión de órdenes: ver compras y cambiar su estado.
     public class OrdenesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,6 +18,7 @@ namespace Templanza.Areas.Admin.Controllers
             _context = context;
         }
 
+        // Listado de todas las órdenes.
         public async Task<IActionResult> Index()
         {
             var ordenes = await _context.Ordenes
@@ -27,6 +29,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(ordenes);
         }
 
+        // Detalle de una orden con sus items.
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null) return NotFound();
@@ -42,6 +45,7 @@ namespace Templanza.Areas.Admin.Controllers
             return View(orden);
         }
 
+        // Actualiza el estado de una orden (ej. al confirmar el pago).
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CambiarEstado(int id, EstadoOrden estado)
