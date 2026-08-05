@@ -20,7 +20,7 @@
         <h1>@Model.NombreComun</h1>
         <h6 class="text-muted">@Model.NombreCientifico · @Model.Categoria?.Nombre</h6>
 
-        <p class="fs-4">@Model.Precio.ToString("C")</p>
+        <p class="fs-4 precio-destacado">@Model.Precio.ToString("C")</p>
         <p>@(Model.Stock > 0 ? $"Stock disponible: {Model.Stock}" : "Sin stock disponible")</p>
 
         <dl class="row">

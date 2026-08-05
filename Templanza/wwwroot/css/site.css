@@ -1,17 +1,28 @@
 /* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+/* Tipografía según Manual de Identidad Visual Corporativa de Templanza:
+   Playfair Display = titulares y logotipo · Montserrat = cuerpo de texto y subtítulos. */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@400;500;600;700&display=swap');
 
 :root {
-  --templanza-verde-oscuro: #2f4a3c;
-  --templanza-verde: #4a7c59;
-  --templanza-verde-claro: #8bab8a;
-  --templanza-verde-suave: #e6ede3;
-  --templanza-beige: #efe6d2;
-  --templanza-arena: #ddcea6;
-  --templanza-acento: #c98a4b;
-  --templanza-dorado: #c2a238;
+  /* Paleta cromática principal (Manual de Identidad, pág. 7) */
+  --templanza-oliva: #5C6B3A;         /* Cuerpo / hojas — color dominante: navbar, botones neutros, texto de marca */
+  --templanza-oliva-oscuro: #46512c;  /* Variante oscura de Oliva para estados hover/active */
+  --templanza-ocre: #E1B31C;          /* Tapa / detalle — acento de conversión: precio, comprar, "me gusta" activo */
+  --templanza-ocre-oscuro: #b8930f;   /* Variante oscura de Ocre para hover/active */
+  --templanza-lino: #F9F8F3;          /* Fondo corporativo */
+
+  /* Paleta secundaria y acentos temáticos (Manual, pág. 8-9) */
+  --templanza-musgo: #3A4526;         /* Fondos oscuros / separación institucional: footer, panel admin */
+  --templanza-terracota: #B9714A;     /* Acentos cálidos, íconos secundarios */
+  --templanza-piedra: #8C8A80;        /* Texto secundario, líneas, UI */
+  --templanza-hibisco: #A63A4B;       /* Acento de atracción (me gusta / favoritos), no de alerta */
+  --templanza-bruma: #6F98A0;         /* Acento de calma e información */
+
+  /* Derivados de uso interno para UI (no forman parte de la paleta oficial) */
+  --templanza-oliva-suave: #e7eadf;   /* Tinte muy claro de Oliva para fondos de íconos/badges */
+  --templanza-borde: rgba(140, 138, 128, 0.35); /* Gris Piedra a baja opacidad, para líneas y bordes */
   --templanza-texto: #2c2c24;
 }
 
@@ -36,8 +47,10 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin-bottom: 0;
-  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
-  background-color: var(--templanza-beige);
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  line-height: 1.4; /* Cuerpo de texto: interlineado 140% */
+  background-color: var(--templanza-lino);
   color: var(--templanza-texto);
 }
 
@@ -61,18 +74,32 @@ body::after {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: rgba(239, 230, 210, 0.9);
+  background: rgba(249, 248, 243, 0.92);
 }
 
+/* Sistema tipográfico (Manual, pág. 10) */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Nunito', system-ui, sans-serif;
+  color: var(--templanza-oliva-oscuro);
+}
+
+h1, h3, h4 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
   font-weight: 700;
-  color: var(--templanza-verde-oscuro);
+  line-height: 1.2; /* interlineado 120% */
 }
 
 h1 { font-size: 3.4rem; }
-h2 { font-size: 2.5rem; }
 h3 { font-size: 1.9rem; }
+h4 { font-size: 1.5rem; }
+
+h2, h5, h6 {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  font-weight: 600; /* SemiBold */
+  line-height: 1.3; /* interlineado 130% */
+  letter-spacing: 0.05em; /* tracking +50 */
+}
+
+h2 { font-size: 2.5rem; }
 
 .lead {
   font-size: 1.45rem;
@@ -85,20 +112,20 @@ p, li {
 }
 
 a {
-  color: var(--templanza-verde);
+  color: var(--templanza-oliva);
 }
 
 .text-muted {
-  color: #55523f !important;
+  color: var(--templanza-piedra) !important;
   opacity: 1 !important;
 }
 
 a:hover {
-  color: var(--templanza-verde-oscuro);
+  color: var(--templanza-oliva-oscuro);
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem var(--templanza-beige), 0 0 0 0.25rem var(--templanza-verde-claro);
+  box-shadow: 0 0 0 0.1rem var(--templanza-lino), 0 0 0 0.25rem var(--templanza-oliva);
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -110,19 +137,20 @@ a:hover {
   text-align: start;
 }
 
-/* Navbar */
+/* Navbar — Verde Oliva es la "voz institucional" de la marca (Manual, pág. 9) */
 .navbar {
-  background-color: rgba(230, 237, 227, 0.75) !important;
+  background-color: rgba(249, 248, 243, 0.85) !important;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border-bottom: 4px solid var(--templanza-verde);
-  box-shadow: 0 0.25rem 0.75rem rgba(47, 74, 60, 0.12);
+  border-bottom: 4px solid var(--templanza-oliva);
+  box-shadow: 0 0.25rem 0.75rem rgba(58, 69, 38, 0.12);
 }
 
 .navbar-brand {
-  font-weight: 800;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
   font-size: 1.6rem;
-  color: var(--templanza-verde-oscuro) !important;
+  color: var(--templanza-oliva-oscuro) !important;
   letter-spacing: 0.5px;
 }
 
@@ -138,7 +166,7 @@ a:hover {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: var(--templanza-beige);
+  background: var(--templanza-lino);
   box-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, 0.25);
   flex-shrink: 0;
 }
@@ -149,6 +177,7 @@ a:hover {
 }
 
 .footer strong {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
   font-size: 1.15rem;
 }
 
@@ -159,67 +188,124 @@ a:hover {
 }
 
 .nav-link.text-dark:hover {
-  color: var(--templanza-verde) !important;
+  color: var(--templanza-oliva) !important;
+}
+
+/* Indicador de zona institucional (panel de administración) — Verde Musgo separa
+   contexto institucional de las zonas de venta (Manual, pág. 9). */
+.navbar-admin {
+  border-bottom-color: var(--templanza-musgo);
+}
+
+.badge-admin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--templanza-lino);
+  background-color: var(--templanza-musgo);
+  padding: 0.3rem 0.65rem;
+  border-radius: 50rem;
 }
 
 /* Botones */
+.btn {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  font-weight: 600;
+}
+
 .btn-primary {
   color: #fff;
-  background-color: var(--templanza-verde);
-  border-color: var(--templanza-verde);
+  background-color: var(--templanza-oliva);
+  border-color: var(--templanza-oliva);
 }
 
 .btn-primary:hover, .btn-primary:focus {
-  background-color: var(--templanza-verde-oscuro);
-  border-color: var(--templanza-verde-oscuro);
+  background-color: var(--templanza-oliva-oscuro);
+  border-color: var(--templanza-oliva-oscuro);
 }
 
 .btn-outline-primary {
-  color: var(--templanza-verde);
-  border-color: var(--templanza-verde);
+  color: var(--templanza-oliva);
+  border-color: var(--templanza-oliva);
 }
 
 .btn-outline-primary:hover {
-  background-color: var(--templanza-verde);
-  border-color: var(--templanza-verde);
+  background-color: var(--templanza-oliva);
+  border-color: var(--templanza-oliva);
 }
 
-.btn-success {
-  background-color: var(--templanza-verde);
-  border-color: var(--templanza-verde);
+/* Ocre Dorado = "color de la decisión del usuario" (Manual, pág. 9): se usa en los
+   llamados a la acción de conversión (comprar, confirmar compra), nunca en navegación neutra. */
+.btn-success,
+.btn-ocre {
+  color: var(--templanza-texto);
+  background-color: var(--templanza-ocre);
+  border-color: var(--templanza-ocre);
 }
 
-.btn-success:hover {
-  background-color: var(--templanza-verde-oscuro);
-  border-color: var(--templanza-verde-oscuro);
+.btn-success:hover, .btn-success:focus,
+.btn-ocre:hover, .btn-ocre:focus {
+  color: var(--templanza-texto);
+  background-color: var(--templanza-ocre-oscuro);
+  border-color: var(--templanza-ocre-oscuro);
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: var(--templanza-verde);
-  border-color: var(--templanza-verde-oscuro);
+  background-color: var(--templanza-oliva);
+  border-color: var(--templanza-oliva-oscuro);
+}
+
+/* Botón "me gusta" — Rojo Hibisco como acento de atracción, no de alerta (Manual, pág. 9):
+   se usa para favoritos/likes en vez del rojo de error de Bootstrap. */
+.btn-like {
+  color: var(--templanza-hibisco);
+  border-color: var(--templanza-hibisco);
+  background-color: transparent;
+}
+
+.btn-like:hover {
+  color: #fff;
+  background-color: var(--templanza-hibisco);
+  border-color: var(--templanza-hibisco);
+}
+
+.btn-like.activo {
+  color: #fff;
+  background-color: var(--templanza-hibisco);
+  border-color: var(--templanza-hibisco);
+}
+
+.btn-like.activo:hover {
+  background-color: #8a2f3d;
+  border-color: #8a2f3d;
 }
 
 /* Cards */
 .card {
-  border: 1px solid var(--templanza-arena);
-  border-top: 4px solid var(--templanza-verde-claro);
+  border: 1px solid var(--templanza-borde);
+  border-top: 4px solid var(--templanza-piedra);
   border-radius: 0.6rem;
   background-color: rgba(255, 253, 248, 0.82);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  box-shadow: 0 0.15rem 0.5rem rgba(47, 74, 60, 0.06);
+  box-shadow: 0 0.15rem 0.5rem rgba(58, 69, 38, 0.06);
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-top-color 0.18s ease;
 }
 
 .card:hover {
   transform: translateY(-3px);
-  border-top-color: var(--templanza-acento);
-  box-shadow: 0 0.5rem 1.25rem rgba(47, 74, 60, 0.18);
+  border-top-color: var(--templanza-terracota);
+  box-shadow: 0 0.5rem 1.25rem rgba(58, 69, 38, 0.18);
 }
 
 .card-title {
-  color: var(--templanza-verde-oscuro);
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  color: var(--templanza-oliva-oscuro);
 }
 
 .icono-card {
@@ -229,7 +315,7 @@ a:hover {
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: var(--templanza-verde-suave);
+  background-color: var(--templanza-oliva-suave);
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
@@ -248,12 +334,12 @@ a:hover {
 
 /* Hero */
 .hero-templanza {
-  background: linear-gradient(135deg, rgba(139, 171, 138, 0.4) 0%, rgba(239, 230, 210, 0.55) 55%, rgba(201, 138, 75, 0.22) 100%);
+  background: linear-gradient(135deg, rgba(92, 107, 58, 0.35) 0%, rgba(249, 248, 243, 0.6) 55%, rgba(225, 179, 28, 0.22) 100%);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
-  border: 1px solid var(--templanza-arena);
+  border: 1px solid var(--templanza-borde);
   border-radius: 1rem;
-  box-shadow: 0 0.5rem 1.5rem rgba(47, 74, 60, 0.1);
+  box-shadow: 0 0.5rem 1.5rem rgba(58, 69, 38, 0.1);
 }
 
 .hero-pantalla-completa {
@@ -269,7 +355,7 @@ a:hover {
   width: 100%;
   max-width: 460px;
   height: auto;
-  filter: drop-shadow(0 0.35rem 0.9rem rgba(47, 74, 60, 0.25));
+  filter: drop-shadow(0 0.35rem 0.9rem rgba(58, 69, 38, 0.25));
 }
 
 /* Secciones informativas del home */
@@ -280,7 +366,7 @@ a:hover {
 .seccion-info-alt {
   background: rgba(255, 255, 255, 0.55);
   border-radius: 1rem;
-  border: 1px solid var(--templanza-arena);
+  border: 1px solid var(--templanza-borde);
 }
 
 .icono-info {
@@ -290,41 +376,41 @@ a:hover {
 }
 
 .tabla-preparacion th {
-  color: var(--templanza-verde-oscuro);
-  border-bottom-color: var(--templanza-verde);
+  color: var(--templanza-oliva-oscuro);
+  border-bottom-color: var(--templanza-oliva);
 }
 
 .panel-tabla {
   background-color: rgba(255, 253, 248, 0.82);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--templanza-arena);
+  border: 1px solid var(--templanza-borde);
   border-radius: 0.6rem;
-  box-shadow: 0 0.15rem 0.5rem rgba(47, 74, 60, 0.06);
+  box-shadow: 0 0.15rem 0.5rem rgba(58, 69, 38, 0.06);
   padding: 1.25rem 1.5rem;
 }
 
 .tabla-preparacion tbody tr:not(:last-child) td {
-  border-bottom: 1px solid var(--templanza-arena);
+  border-bottom: 1px solid var(--templanza-borde);
 }
 
 .badge-dorado {
-  background-color: var(--templanza-dorado) !important;
-  color: #2c2c24 !important;
+  background-color: var(--templanza-ocre) !important;
+  color: var(--templanza-texto) !important;
 }
 
 .accordion-button:not(.collapsed) {
-  color: var(--templanza-verde-oscuro);
-  background-color: var(--templanza-verde-suave);
+  color: var(--templanza-oliva-oscuro);
+  background-color: var(--templanza-oliva-suave);
 }
 
 .accordion-button:focus {
-  box-shadow: 0 0 0 0.2rem rgba(74, 124, 89, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(92, 107, 58, 0.25);
 }
 
 .franja-dorada {
   height: 6px;
-  background: linear-gradient(90deg, var(--templanza-verde) 0%, var(--templanza-dorado) 50%, var(--templanza-verde) 100%);
+  background: linear-gradient(90deg, var(--templanza-oliva) 0%, var(--templanza-ocre) 50%, var(--templanza-oliva) 100%);
   border-radius: 3px;
   width: 90px;
   margin: 0.5rem auto 1.5rem;
@@ -332,7 +418,7 @@ a:hover {
 
 .hero-scroll-hint {
   font-size: 1.75rem;
-  color: var(--templanza-verde);
+  color: var(--templanza-oliva);
   animation: hero-scroll-bounce 1.8s ease-in-out infinite;
 }
 
@@ -343,16 +429,16 @@ a:hover {
 
 /* Sección de blends (home) */
 .seccion-blends {
-  border-top: 1px solid var(--templanza-arena);
+  border-top: 1px solid var(--templanza-borde);
 }
 
 .cita-blends {
   max-width: 40rem;
-  font-family: 'Nunito', system-ui, sans-serif;
-  font-size: 1.4rem;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: 1.5rem;
   font-weight: 700;
   font-style: italic;
-  color: var(--templanza-verde-oscuro);
+  color: var(--templanza-oliva-oscuro);
 }
 
 /* Carrusel de catálogo en el home */
@@ -367,8 +453,8 @@ a:hover {
   aspect-ratio: 1 / 1;
   overflow: hidden;
   font-size: 2.75rem;
-  background: linear-gradient(135deg, var(--templanza-verde-suave) 0%, var(--templanza-beige) 100%);
-  border-bottom: 1px solid var(--templanza-arena);
+  background: linear-gradient(135deg, var(--templanza-oliva-suave) 0%, var(--templanza-lino) 100%);
+  border-bottom: 1px solid var(--templanza-borde);
 }
 
 .planta-thumb img {
@@ -384,7 +470,7 @@ a:hover {
   aspect-ratio: 1 / 1;
   overflow: hidden;
   font-size: 5rem;
-  background: linear-gradient(135deg, var(--templanza-verde-suave) 0%, var(--templanza-beige) 100%);
+  background: linear-gradient(135deg, var(--templanza-oliva-suave) 0%, var(--templanza-lino) 100%);
 }
 
 .planta-detalle-thumb img {
@@ -400,7 +486,7 @@ a:hover {
 
 .carousel-plantas .carousel-control-prev-icon,
 .carousel-plantas .carousel-control-next-icon {
-  background-color: var(--templanza-verde-oscuro);
+  background-color: var(--templanza-oliva-oscuro);
   border-radius: 50%;
   padding: 0.75rem;
   filter: none;
@@ -412,7 +498,7 @@ a:hover {
 }
 
 .carousel-plantas .carousel-indicators [data-bs-target] {
-  background-color: var(--templanza-verde);
+  background-color: var(--templanza-oliva);
   opacity: 0.5;
 }
 
@@ -427,35 +513,41 @@ a:hover {
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: var(--templanza-verde-oscuro);
-  background-color: var(--templanza-verde-suave);
+  color: var(--templanza-oliva-oscuro);
+  background-color: var(--templanza-oliva-suave);
   padding: 0.25rem 0.6rem;
   border-radius: 50rem;
 }
 
 .badge-stock-disponible {
-  background-color: var(--templanza-verde);
+  background-color: var(--templanza-oliva);
   color: #fff;
 }
 
 .badge-stock-agotado {
-  background-color: #b5493f;
+  background-color: #8a3a32;
   color: #fff;
+}
+
+/* Precio destacado — Ocre Dorado es el color de la decisión de compra (Manual, pág. 9) */
+.precio-destacado {
+  color: var(--templanza-ocre-oscuro);
+  font-weight: 700;
 }
 
 /* Stepper de cantidad */
 .stepper-cantidad {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--templanza-verde-claro);
+  border: 1px solid var(--templanza-piedra);
   border-radius: 0.4rem;
   overflow: hidden;
 }
 
 .stepper-cantidad button {
-  background-color: var(--templanza-beige);
+  background-color: var(--templanza-lino);
   border: none;
-  color: var(--templanza-verde-oscuro);
+  color: var(--templanza-oliva-oscuro);
   font-weight: 700;
   width: 2rem;
   line-height: 2rem;
@@ -463,7 +555,7 @@ a:hover {
 }
 
 .stepper-cantidad button:hover {
-  background-color: var(--templanza-arena);
+  background-color: var(--templanza-oliva-suave);
 }
 
 .stepper-cantidad input {
@@ -487,10 +579,10 @@ a:hover {
   margin-right: auto;
 }
 
-/* Badge del carrito */
+/* Badge del carrito — vinculado a la decisión de compra: Ocre Dorado */
 .badge-carrito {
-  background-color: var(--templanza-acento);
-  color: #fff;
+  background-color: var(--templanza-ocre);
+  color: var(--templanza-texto);
   border-radius: 50rem;
   font-size: 0.7rem;
   padding: 0.15rem 0.4rem;
@@ -518,18 +610,20 @@ button.accept-policy {
   flex: 1 0 auto;
 }
 
+/* Pie de página — Verde Musgo marca la zona institucional, separada de las zonas de venta
+   (Manual, pág. 9). */
 .footer {
   flex-shrink: 0;
   width: 100%;
-  background-color: rgba(47, 74, 60, 0.88);
+  background-color: rgba(58, 69, 38, 0.92);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  color: var(--templanza-verde-suave);
+  color: var(--templanza-oliva-suave);
   border-top: none;
 }
 
 .footer a {
-  color: var(--templanza-arena);
+  color: #d9d6c4;
 }
 
 .footer a:hover {

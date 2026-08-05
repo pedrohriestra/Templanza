@@ -29,7 +29,7 @@
         {
             <form asp-action="Like" method="post" class="d-inline">
                 <input type="hidden" name="blendId" value="@Model.Id" />
-                <button type="submit" class="btn @(yaLeDioLike ? "btn-danger" : "btn-outline-danger")">
+                <button type="submit" class="btn btn-like @(yaLeDioLike ? "activo" : "")">
                     ❤ @(yaLeDioLike ? "Quitar like" : "Me gusta") (@Model.BlendLikes.Count)
                 </button>
             </form>

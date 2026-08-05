@@ -56,7 +56,7 @@ function inicializarConfirmaciones() {
                 showCancelButton: true,
                 confirmButtonText: 'Sí, confirmar',
                 cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#4a7c59'
+                confirmButtonColor: '#5C6B3A'
             }).then(function (resultado) {
                 if (resultado.isConfirmed) {
                     form.dataset.confirmado = 'true';
