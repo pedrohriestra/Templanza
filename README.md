@@ -109,52 +109,38 @@ El link de cobro se configura en `appsettings.json` → `MercadoPago:PaymentLink
 
 ### Tienda pública
 
-| | |
-|---|---|
-| **Inicio** | ![Inicio](docs/screenshots/01-home.png) |
-| **Catálogo** (filtro por categoría) | ![Tienda](docs/screenshots/02-tienda.png) |
-| **Detalle de planta** (agregar al carrito con stepper) | ![Detalle de planta](docs/screenshots/03-planta-detalle.png) |
+- **Inicio**: portada del sitio.
+- **Catálogo** (filtro por categoría): listado de plantas con botones para filtrar por categoría.
+- **Detalle de planta**: ficha con efectos asociados y stepper para agregar al carrito.
 
 ### Foro de blends
 
-| | |
-|---|---|
-| **Foro comunitario** | ![Foro](docs/screenshots/04-foro-blends.png) |
-| **Detalle de blend** (comentarios y likes) | ![Detalle de blend](docs/screenshots/05-blend-detalle.png) |
-| **Blends recomendados** | ![Recomendados](docs/screenshots/06-recomendados.png) |
+- **Foro comunitario**: blends publicados y aprobados por moderación.
+- **Detalle de blend**: receta completa, comentarios y likes.
+- **Blends recomendados**: vitrina de recetas oficiales curadas por Templanza.
 
 ### Cuenta
 
-| | |
-|---|---|
-| **Registro** | ![Registro](docs/screenshots/07-registro.png) |
-| **Login** | ![Login](docs/screenshots/08-login.png) |
+- **Registro**: alta de usuario con envío real de email de confirmación.
+- **Login / recuperación de contraseña**: vía ASP.NET Core Identity.
 
 ### Compra y pago
 
-| | |
-|---|---|
-| **Orden pendiente con QR de Mercado Pago** (en mobile se muestra un botón de redirect en vez del QR) | ![Pago con QR](docs/screenshots/15-orden-pago-mp.png) |
+- **Orden pendiente con QR de Mercado Pago**: al confirmar la compra, la orden queda pendiente hasta verificar el pago (en mobile se muestra un botón de redirect en vez del QR).
 
-### Panel de administración (`/Admin`, roles Administrador/Operador)
+### Panel de administración (`/Admin`)
 
-| | |
-|---|---|
-| **Dashboard** | ![Panel admin](docs/screenshots/09-admin-dashboard.png) |
-| **CRUD de Plantas** (búsqueda y paginación hechas a mano) | ![Plantas admin](docs/screenshots/10-admin-plantas.png) |
-| **CRUD de Categorías** (con DataTable) | ![Categorías admin](docs/screenshots/11-admin-categorias.png) |
-| **Moderación de blends pendientes** | ![Moderación](docs/screenshots/12-admin-blends-pendientes.png) |
-| **Órdenes** (ver compras y cambiar estado) | ![Órdenes admin](docs/screenshots/13-admin-ordenes.png) |
-| **Reporte de ventas** (stored procedure, por rango de fechas) | ![Reporte de ventas](docs/screenshots/14-admin-reporte-ventas.png) |
-
-También desde `/Admin` (sin captura todavía):
-
-- **Efectos**: CRUD del catálogo de efectos aplicables a las plantas.
-- **Blends recomendados**: alta/edición/baja de las recetas oficiales curadas por Templanza.
+- **Dashboard**: accesos rápidos según el rol logueado.
+- **CRUD de Plantas**: búsqueda y paginación hechas a mano.
+- **CRUD de Categorías** y **Efectos**: listados con DataTable.
+- **Blends recomendados**: alta/edición/baja de las recetas oficiales.
+- **Moderación de blends pendientes**: aprobar o rechazar lo que manda la comunidad.
 - **Comentarios**: moderación de comentarios del foro.
-- **Correos enviados**: log de auditoría de los emails de confirmación/recuperación, con estado de éxito/error.
+- **Órdenes**: ver compras y cambiar su estado.
+- **Reporte de ventas**: stored procedure, por rango de fechas.
+- **Correos enviados**: log de auditoría de los emails, con estado de éxito/error.
 - **Usuarios**: alta, baja y edición de cuentas — nombre, email (con confirmación manual), teléfono, contraseña y rol.
 
 ## Integrantes
 
-Pedro Riestra
+Pedro Herrera Riestra
