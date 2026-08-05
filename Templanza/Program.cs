@@ -27,7 +27,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IEmailSender, EmailSenderGmail>();
+builder.Services.AddHttpClient<IEmailSender, EmailSenderResend>();
 builder.Services.AddScoped<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, IdentityUiEmailSenderAdapter>();
 
 builder.Services.AddDistributedMemoryCache();
