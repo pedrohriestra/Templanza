@@ -40,6 +40,10 @@ namespace Templanza.Models
         public int CategoriaId { get; set; }
         public Categoria? Categoria { get; set; }
 
+        [StringLength(300, ErrorMessage = "Como máximo {1} caracteres.")]
+        [Display(Name = "Imagen")]
+        public string? ImagenUrl { get; set; }
+
         public ICollection<PlantaEfecto> PlantaEfectos { get; set; } = new List<PlantaEfecto>();
         public ICollection<BlendPlanta> BlendPlantas { get; set; } = new List<BlendPlanta>();
         public ICollection<ItemOrden> ItemOrdenes { get; set; } = new List<ItemOrden>();

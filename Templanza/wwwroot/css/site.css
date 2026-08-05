@@ -11,16 +11,17 @@ for details on configuring this project to bundle and minify static web assets. 
   --templanza-beige: #efe6d2;
   --templanza-arena: #ddcea6;
   --templanza-acento: #c98a4b;
+  --templanza-dorado: #c2a238;
   --templanza-texto: #2c2c24;
 }
 
 html {
-  font-size: 14px;
+  font-size: 21px;
 }
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 24px;
   }
 }
 
@@ -30,18 +31,37 @@ html {
 }
 
 body {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   margin-bottom: 0;
   font-family: 'Nunito', system-ui, -apple-system, sans-serif;
   background-color: var(--templanza-beige);
-  background-image:
-    radial-gradient(circle at 12% 8%, rgba(74, 124, 89, 0.14), transparent 42%),
-    radial-gradient(circle at 88% 18%, rgba(201, 138, 75, 0.14), transparent 38%),
-    radial-gradient(circle at 50% 100%, rgba(47, 74, 60, 0.08), transparent 45%);
-  background-attachment: fixed;
   color: var(--templanza-texto);
+}
+
+/* Fondo de pantalla (foto de hierbas) en todas las páginas, desenfocado tipo "crystal" */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url('../images/fondo-home.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  filter: blur(6px) saturate(1.05) brightness(0.97);
+  transform: scale(1.08);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(239, 230, 210, 0.9);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -50,8 +70,27 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--templanza-verde-oscuro);
 }
 
+h1 { font-size: 3.4rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.9rem; }
+
+.lead {
+  font-size: 1.45rem;
+  line-height: 1.6;
+}
+
+p, li {
+  font-size: 1.15rem;
+  line-height: 1.65;
+}
+
 a {
   color: var(--templanza-verde);
+}
+
+.text-muted {
+  color: #55523f !important;
+  opacity: 1 !important;
 }
 
 a:hover {
@@ -73,19 +112,49 @@ a:hover {
 
 /* Navbar */
 .navbar {
-  background-color: var(--templanza-verde-suave) !important;
+  background-color: rgba(230, 237, 227, 0.75) !important;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border-bottom: 4px solid var(--templanza-verde);
   box-shadow: 0 0.25rem 0.75rem rgba(47, 74, 60, 0.12);
 }
 
 .navbar-brand {
   font-weight: 800;
+  font-size: 1.6rem;
   color: var(--templanza-verde-oscuro) !important;
   letter-spacing: 0.5px;
 }
 
+.navbar-brand-logo {
+  height: 56px;
+  width: auto;
+}
+
+.footer-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--templanza-beige);
+  box-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.footer-logo {
+  height: 30px;
+  width: auto;
+}
+
+.footer strong {
+  font-size: 1.15rem;
+}
+
 .nav-link.text-dark {
   color: var(--templanza-texto) !important;
+  font-size: 1.08rem;
   transition: color 0.15s ease;
 }
 
@@ -136,7 +205,9 @@ a:hover {
   border: 1px solid var(--templanza-arena);
   border-top: 4px solid var(--templanza-verde-claro);
   border-radius: 0.6rem;
-  background-color: #fffdf8;
+  background-color: rgba(255, 253, 248, 0.82);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   box-shadow: 0 0.15rem 0.5rem rgba(47, 74, 60, 0.06);
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-top-color 0.18s ease;
 }
@@ -177,10 +248,199 @@ a:hover {
 
 /* Hero */
 .hero-templanza {
-  background: linear-gradient(135deg, rgba(139, 171, 138, 0.45) 0%, var(--templanza-beige) 55%, rgba(201, 138, 75, 0.25) 100%);
+  background: linear-gradient(135deg, rgba(139, 171, 138, 0.4) 0%, rgba(239, 230, 210, 0.55) 55%, rgba(201, 138, 75, 0.22) 100%);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--templanza-arena);
   border-radius: 1rem;
   box-shadow: 0 0.5rem 1.5rem rgba(47, 74, 60, 0.1);
+}
+
+.hero-pantalla-completa {
+  min-height: calc(100svh - 7rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.hero-logo {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  filter: drop-shadow(0 0.35rem 0.9rem rgba(47, 74, 60, 0.25));
+}
+
+/* Secciones informativas del home */
+.seccion-info {
+  padding: 3rem 0;
+}
+
+.seccion-info-alt {
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 1rem;
+  border: 1px solid var(--templanza-arena);
+}
+
+.icono-info {
+  font-size: 2.75rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.tabla-preparacion th {
+  color: var(--templanza-verde-oscuro);
+  border-bottom-color: var(--templanza-verde);
+}
+
+.panel-tabla {
+  background-color: rgba(255, 253, 248, 0.82);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--templanza-arena);
+  border-radius: 0.6rem;
+  box-shadow: 0 0.15rem 0.5rem rgba(47, 74, 60, 0.06);
+  padding: 1.25rem 1.5rem;
+}
+
+.tabla-preparacion tbody tr:not(:last-child) td {
+  border-bottom: 1px solid var(--templanza-arena);
+}
+
+.badge-dorado {
+  background-color: var(--templanza-dorado) !important;
+  color: #2c2c24 !important;
+}
+
+.accordion-button:not(.collapsed) {
+  color: var(--templanza-verde-oscuro);
+  background-color: var(--templanza-verde-suave);
+}
+
+.accordion-button:focus {
+  box-shadow: 0 0 0 0.2rem rgba(74, 124, 89, 0.25);
+}
+
+.franja-dorada {
+  height: 6px;
+  background: linear-gradient(90deg, var(--templanza-verde) 0%, var(--templanza-dorado) 50%, var(--templanza-verde) 100%);
+  border-radius: 3px;
+  width: 90px;
+  margin: 0.5rem auto 1.5rem;
+}
+
+.hero-scroll-hint {
+  font-size: 1.75rem;
+  color: var(--templanza-verde);
+  animation: hero-scroll-bounce 1.8s ease-in-out infinite;
+}
+
+@keyframes hero-scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
+/* Sección de blends (home) */
+.seccion-blends {
+  border-top: 1px solid var(--templanza-arena);
+}
+
+.cita-blends {
+  max-width: 40rem;
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--templanza-verde-oscuro);
+}
+
+/* Carrusel de catálogo en el home */
+.carousel-plantas .card:hover {
+  transform: translateY(-3px);
+}
+
+.planta-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  font-size: 2.75rem;
+  background: linear-gradient(135deg, var(--templanza-verde-suave) 0%, var(--templanza-beige) 100%);
+  border-bottom: 1px solid var(--templanza-arena);
+}
+
+.planta-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.planta-detalle-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  font-size: 5rem;
+  background: linear-gradient(135deg, var(--templanza-verde-suave) 0%, var(--templanza-beige) 100%);
+}
+
+.planta-detalle-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-plantas .carousel-control-prev,
+.carousel-plantas .carousel-control-next {
+  width: 3rem;
+}
+
+.carousel-plantas .carousel-control-prev-icon,
+.carousel-plantas .carousel-control-next-icon {
+  background-color: var(--templanza-verde-oscuro);
+  border-radius: 50%;
+  padding: 0.75rem;
+  filter: none;
+}
+
+.carousel-plantas .carousel-indicators {
+  position: static;
+  margin: 1rem 0 0;
+}
+
+.carousel-plantas .carousel-indicators [data-bs-target] {
+  background-color: var(--templanza-verde);
+  opacity: 0.5;
+}
+
+.carousel-plantas .carousel-indicators .active {
+  opacity: 1;
+}
+
+/* Catálogo de la tienda */
+.badge-categoria {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--templanza-verde-oscuro);
+  background-color: var(--templanza-verde-suave);
+  padding: 0.25rem 0.6rem;
+  border-radius: 50rem;
+}
+
+.badge-stock-disponible {
+  background-color: var(--templanza-verde);
+  color: #fff;
+}
+
+.badge-stock-agotado {
+  background-color: #b5493f;
+  color: #fff;
 }
 
 /* Stepper de cantidad */
@@ -261,7 +521,9 @@ button.accept-policy {
 .footer {
   flex-shrink: 0;
   width: 100%;
-  background-color: var(--templanza-verde-oscuro);
+  background-color: rgba(47, 74, 60, 0.88);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   color: var(--templanza-verde-suave);
   border-top: none;
 }

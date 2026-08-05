@@ -1,45 +1,329 @@
+@model IEnumerable<Planta>
 @{
     ViewData["Title"] = "Inicio";
+    var grupos = Model.Chunk(3).ToList();
 }
 
-<div class="px-4 py-5 my-4 text-center hero-templanza">
-    <h1 class="display-4 fw-bold">🌿 Templanza</h1>
-    <p class="lead col-lg-8 mx-auto">
-        Tienda online de hierbas para té y foro comunitario de <strong>blends</strong>:
-        combinaciones de hierbas armadas y compartidas por la comunidad.
-    </p>
-    <div class="d-flex justify-content-center gap-2 mt-4">
-        <a asp-controller="Plantas" asp-action="Index" class="btn btn-primary btn-lg px-4">Ir a la tienda</a>
-        <a asp-controller="Blends" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">Ver el foro de blends</a>
+<div class="px-4 text-center hero-templanza hero-pantalla-completa">
+    <div>
+        <img src="~/images/brand/templanza-imagotipo.png" alt="Templanza" class="hero-logo mb-3" />
+        <p class="lead col-lg-8 mx-auto">
+            Tienda online de hierbas para té y foro comunitario de <strong>blends</strong>:
+            combinaciones de hierbas armadas y compartidas por la comunidad.
+        </p>
+        <div class="d-flex justify-content-center gap-2 mt-4">
+            <a asp-controller="Plantas" asp-action="Index" class="btn btn-primary btn-lg px-4">Ir a la tienda</a>
+            <a asp-controller="Blends" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">Ver el foro de blends</a>
+        </div>
     </div>
+    <div class="hero-scroll-hint">↓</div>
 </div>
 
-<div class="row row-cols-1 row-cols-md-3 g-4 my-4">
-    <div class="col">
-        <div class="card h-100 text-center fade-in-up">
-            <div class="card-body">
-                <span class="icono-card">🌿</span>
-                <h5 class="card-title">Catálogo de plantas</h5>
-                <p class="card-text">Manzanilla, menta, jengibre y más, listas para comprar.</p>
+@if (grupos.Count > 0)
+{
+    <h2 class="text-center mt-5 mb-4">Nuestro catálogo</h2>
+
+    <div id="carouselPlantas" class="carousel slide carousel-plantas mb-4" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @for (int i = 0; i < grupos.Count; i++)
+            {
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="row row-cols-1 row-cols-md-3 g-3 px-1 px-md-5">
+                        @foreach (var planta in grupos[i])
+                        {
+                            <div class="col">
+                                <a asp-controller="Plantas" asp-action="Details" asp-route-id="@planta.Id" class="text-decoration-none">
+                                    <div class="card h-100 text-center">
+                                        <div class="planta-thumb">
+                                            @if (!string.IsNullOrEmpty(planta.ImagenUrl))
+                                            {
+                                                <img src="@planta.ImagenUrl" alt="@planta.NombreComun" loading="lazy" />
+                                            }
+                                            else
+                                            {
+                                                @:🌿
+                                            }
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">@planta.NombreComun</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">@planta.Categoria?.Nombre</h6>
+                                            <p class="card-text fw-bold">@planta.Precio.ToString("C")</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (grupos.Count > 1)
+        {
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselPlantas" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselPlantas" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+
+            <div class="carousel-indicators">
+                @for (int i = 0; i < grupos.Count; i++)
+                {
+                    <button type="button" data-bs-target="#carouselPlantas" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-current="@(i == 0 ? "true" : "false")" aria-label="Slide @(i + 1)"></button>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="text-center mb-4">
+        <a asp-controller="Plantas" asp-action="Index" class="btn btn-outline-primary">Ver todo el catálogo</a>
+    </div>
+}
+
+<section class="seccion-blends my-5 py-4">
+    <div class="text-center mb-5">
+        <h2>Blends: un ritual para tu bienestar emocional</h2>
+        <p class="lead col-lg-8 mx-auto text-muted">
+            Un blend no es solo una mezcla de hierbas: es una pausa consciente en el día.
+            Elegir, combinar y preparar tu propia infusión es una forma simple de bajar un cambio
+            y reconectar con vos mismo.
+        </p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-5">
+        <div class="col">
+            <div class="card h-100 text-center fade-in-up">
+                <div class="card-body">
+                    <span class="icono-card">🧘</span>
+                    <h5 class="card-title">Calma y equilibrio</h5>
+                    <p class="card-text">Hierbas relajantes que ayudan a bajar las revoluciones y encontrar un momento de calma en medio del ruido diario.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center fade-in-up">
+                <div class="card-body">
+                    <span class="icono-card">🌙</span>
+                    <h5 class="card-title">Mejor descanso</h5>
+                    <p class="card-text">Combinaciones pensadas para acompañar la noche, aflojar la mente y favorecer un sueño más profundo.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center fade-in-up">
+                <div class="card-body">
+                    <span class="icono-card">💛</span>
+                    <h5 class="card-title">Estabilidad emocional</h5>
+                    <p class="card-text">Armar tu propio blend es un pequeño ritual: elegís a conciencia lo que necesitás en cada momento del día.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center fade-in-up">
+                <div class="card-body">
+                    <span class="icono-card">🤝</span>
+                    <h5 class="card-title">Comunidad</h5>
+                    <p class="card-text">Descubrí blends creados por otros usuarios o compartí el tuyo con toda la comunidad de Templanza.</p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card h-100 text-center fade-in-up">
-            <div class="card-body">
-                <span class="icono-card">💬</span>
-                <h5 class="card-title">Foro de blends</h5>
-                <p class="card-text">Armá tu propia combinación de hierbas y compartila con la comunidad.</p>
+
+    <blockquote class="cita-blends text-center mx-auto">
+        "Un buen blend no solo se toma, se vive."
+    </blockquote>
+
+    <div class="d-flex justify-content-center gap-2 mt-4">
+        <a asp-controller="Blends" asp-action="Index" class="btn btn-primary btn-lg px-4">Ver el foro de blends</a>
+        <a asp-controller="Blends" asp-action="Recomendados" class="btn btn-outline-secondary btn-lg px-4">Ver recomendados</a>
+    </div>
+</section>
+
+<section class="seccion-info seccion-info-alt px-4 px-md-5 my-5">
+    <div class="text-center mb-5">
+        <h2>Beneficios de las infusiones herbales</h2>
+        <div class="franja-dorada"></div>
+        <p class="lead col-lg-8 mx-auto text-muted">
+            Cada hierba tiene propiedades distintas. Estos son algunos de los beneficios más buscados
+            por quienes arman su propia rutina de infusiones.
+        </p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <div class="col text-center">
+            <span class="icono-info">😌</span>
+            <h5>Relajación</h5>
+            <p class="text-muted">Manzanilla, lavanda y pasiflora ayudan a bajar la ansiedad y preparar el cuerpo para el descanso.</p>
+        </div>
+        <div class="col text-center">
+            <span class="icono-info">🍵</span>
+            <h5>Digestión</h5>
+            <p class="text-muted">Menta, boldo y jengibre son clásicos después de las comidas para acompañar una buena digestión.</p>
+        </div>
+        <div class="col text-center">
+            <span class="icono-info">🛡️</span>
+            <h5>Defensas</h5>
+            <p class="text-muted">Equinácea, jengibre y cúrcuma son aliadas habituales en los cambios de estación.</p>
+        </div>
+        <div class="col text-center">
+            <span class="icono-info">⚡</span>
+            <h5>Energía</h5>
+            <p class="text-muted">Yerba mate, té verde y ginseng aportan un empuje natural sin los excesos del café.</p>
+        </div>
+    </div>
+</section>
+
+<section class="seccion-info px-4 px-md-5 my-5">
+    <div class="text-center mb-5">
+        <h2>Guía rápida de preparación</h2>
+        <div class="franja-dorada"></div>
+        <p class="lead col-lg-8 mx-auto text-muted">
+            La temperatura del agua y el tiempo de infusión cambian mucho el resultado final.
+            Como referencia general:
+        </p>
+    </div>
+
+    <div class="table-responsive col-lg-9 mx-auto panel-tabla">
+        <table class="table table-borderless tabla-preparacion align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Tipo de infusión</th>
+                    <th>Temperatura</th>
+                    <th>Tiempo</th>
+                    <th>Sugerencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Té verde</td>
+                    <td>75-80 °C</td>
+                    <td>2-3 min</td>
+                    <td>Evitar agua hirviendo para que no amargue</td>
+                </tr>
+                <tr>
+                    <td>Té negro</td>
+                    <td>95-100 °C</td>
+                    <td>3-5 min</td>
+                    <td>Ideal con un toque de canela o clavo de olor</td>
+                </tr>
+                <tr>
+                    <td>Té blanco</td>
+                    <td>70-75 °C</td>
+                    <td>4-5 min</td>
+                    <td>Sabor suave, requiere agua bien tibia</td>
+                </tr>
+                <tr>
+                    <td>Hierbas / flores (manzanilla, tilo, hibisco)</td>
+                    <td>90-100 °C</td>
+                    <td>5-8 min</td>
+                    <td>Tapar la taza para no perder aromas</td>
+                </tr>
+                <tr>
+                    <td>Raíces y cortezas (jengibre, regaliz)</td>
+                    <td>100 °C</td>
+                    <td>8-10 min</td>
+                    <td>Mejor en hervor suave (decocción)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="seccion-info seccion-info-alt px-4 px-md-5 my-5">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-4 text-center">
+            <img src="~/images/brand/templanza-isotipo.png" alt="Templanza" style="max-width: 180px; width: 100%;" />
+        </div>
+        <div class="col-lg-8">
+            <h2>Quiénes somos</h2>
+            <div class="franja-dorada" style="margin-left: 0;"></div>
+            <p>
+                Templanza nació como un proyecto pensado para acercar el mundo de las hierbas y las infusiones
+                a cualquier persona, sin importar cuánto sepa del tema. Creemos que preparar un té es también
+                un momento para bajar el ritmo del día.
+            </p>
+            <p>
+                Además de la tienda, sostenemos un <strong>foro de blends</strong> donde cualquier usuario puede
+                compartir sus combinaciones de hierbas, probar las de otros y sumar sus propias recomendaciones.
+                La idea es construir, entre todos, una guía viva de infusiones.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="seccion-info px-4 px-md-5 my-5">
+    <div class="text-center mb-5">
+        <h2>Preguntas frecuentes</h2>
+        <div class="franja-dorada"></div>
+    </div>
+
+    <div class="accordion col-lg-9 mx-auto" id="faqTemplanza">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                    ¿Cómo compro en la tienda?
+                </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqTemplanza">
+                <div class="accordion-body">
+                    Entrá a <em>Tienda</em>, elegí las hierbas que quieras y agregalas al carrito. Desde ahí
+                    podés revisar tu pedido en <em>Mis compras</em> antes de confirmarlo.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    ¿Qué es un blend y cómo armo uno?
+                </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqTemplanza">
+                <div class="accordion-body">
+                    Un blend es una combinación de hierbas armada por vos o por otro usuario. Desde el
+                    <em>Foro de Blends</em> podés crear el tuyo eligiendo hierbas y efectos buscados, o
+                    explorar los que ya compartió la comunidad.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                    ¿Necesito una cuenta para ver el catálogo?
+                </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqTemplanza">
+                <div class="accordion-body">
+                    No, podés navegar la tienda y el foro sin registrarte. Para comprar, guardar blends
+                    propios o comentar sí vas a necesitar iniciar sesión.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                    ¿Cómo se conservan las hierbas?
+                </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqTemplanza">
+                <div class="accordion-body">
+                    Lo ideal es guardarlas en un frasco hermético, lejos de la luz y la humedad. Así
+                    conservan mejor su aroma y sus propiedades por más tiempo.
+                </div>
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card h-100 text-center fade-in-up">
-            <div class="card-body">
-                <span class="icono-card">⭐</span>
-                <h5 class="card-title">Recomendados</h5>
-                <p class="card-text">Recetas oficiales curadas por Templanza, listas para inspirarte.</p>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
+
+<section class="seccion-info seccion-info-alt px-4 px-md-5 my-5 text-center">
+    <img src="~/images/brand/templanza-isotipo.png" alt="Templanza" style="max-width: 70px;" class="mb-3" />
+    <h2>¿Tenés dudas o sugerencias?</h2>
+    <div class="franja-dorada"></div>
+    <p class="lead col-lg-7 mx-auto text-muted">
+        Escribinos y te respondemos a la brevedad. También podés dejar tu comentario en cualquier
+        blend del foro: la comunidad de Templanza crece con cada aporte.
+    </p>
+    <a href="mailto:contacto@templanza.com" class="btn btn-primary btn-lg px-4 mt-2">Escribirnos</a>
+</section>

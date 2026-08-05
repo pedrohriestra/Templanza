@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Templanza.Data;
 
@@ -11,9 +12,11 @@ using Templanza.Data;
 namespace Templanza.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260902121830_AgregarCatalogoTe")]
+    partial class AgregarCatalogoTe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -585,10 +588,6 @@ namespace Templanza.Data.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("ImagenUrl")
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
                     b.Property<string>("NombreCientifico")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -625,7 +624,6 @@ namespace Templanza.Data.Migrations
                             Id = 1,
                             CategoriaId = 2,
                             Contraindicaciones = "Alergia a plantas de la familia Asteraceae",
-                            ImagenUrl = "/images/plantas/manzanilla.webp",
                             NombreCientifico = "Matricaria chamomilla",
                             NombreComun = "Manzanilla",
                             Origen = "Europa",
@@ -638,7 +636,6 @@ namespace Templanza.Data.Migrations
                             Id = 2,
                             CategoriaId = 1,
                             Contraindicaciones = "Reflujo gastroesofágico",
-                            ImagenUrl = "/images/plantas/menta.webp",
                             NombreCientifico = "Mentha spicata",
                             NombreComun = "Menta",
                             Origen = "Asia",
@@ -651,7 +648,6 @@ namespace Templanza.Data.Migrations
                             Id = 3,
                             CategoriaId = 3,
                             Contraindicaciones = "Cálculos biliares",
-                            ImagenUrl = "/images/plantas/jengibre.webp",
                             NombreCientifico = "Zingiber officinale",
                             NombreComun = "Jengibre",
                             Origen = "Sudeste asiático",
@@ -664,7 +660,6 @@ namespace Templanza.Data.Migrations
                             Id = 4,
                             CategoriaId = 4,
                             Contraindicaciones = "Obstrucción de vías biliares",
-                            ImagenUrl = "/images/plantas/diente-de-leon.webp",
                             NombreCientifico = "Taraxacum officinale",
                             NombreComun = "Diente de león",
                             Origen = "Europa",
@@ -677,7 +672,6 @@ namespace Templanza.Data.Migrations
                             Id = 5,
                             CategoriaId = 3,
                             Contraindicaciones = "Sensibilidad a la cafeína, insomnio",
-                            ImagenUrl = "/images/plantas/te-verde.webp",
                             NombreCientifico = "Camellia sinensis",
                             NombreComun = "Té verde",
                             Origen = "China",
@@ -690,7 +684,6 @@ namespace Templanza.Data.Migrations
                             Id = 6,
                             CategoriaId = 3,
                             Contraindicaciones = "Sensibilidad a la cafeína, hipertensión",
-                            ImagenUrl = "/images/plantas/te-negro.webp",
                             NombreCientifico = "Camellia sinensis",
                             NombreComun = "Té negro",
                             Origen = "China",
@@ -703,7 +696,6 @@ namespace Templanza.Data.Migrations
                             Id = 7,
                             CategoriaId = 3,
                             Contraindicaciones = "Sensibilidad a la cafeína",
-                            ImagenUrl = "/images/plantas/te-blanco.webp",
                             NombreCientifico = "Camellia sinensis",
                             NombreComun = "Té blanco",
                             Origen = "China",
@@ -716,7 +708,6 @@ namespace Templanza.Data.Migrations
                             Id = 8,
                             CategoriaId = 3,
                             Contraindicaciones = "Sensibilidad a la cafeína",
-                            ImagenUrl = "/images/plantas/te-oolong.webp",
                             NombreCientifico = "Camellia sinensis",
                             NombreComun = "Té oolong",
                             Origen = "China",
@@ -729,7 +720,6 @@ namespace Templanza.Data.Migrations
                             Id = 9,
                             CategoriaId = 2,
                             Contraindicaciones = "Sin contraindicaciones relevantes conocidas",
-                            ImagenUrl = "/images/plantas/rooibos.webp",
                             NombreCientifico = "Aspalathus linearis",
                             NombreComun = "Rooibos",
                             Origen = "Sudáfrica",
@@ -742,7 +732,6 @@ namespace Templanza.Data.Migrations
                             Id = 10,
                             CategoriaId = 4,
                             Contraindicaciones = "Embarazo, presión arterial baja",
-                            ImagenUrl = "/images/plantas/hibisco.webp",
                             NombreCientifico = "Hibiscus sabdariffa",
                             NombreComun = "Hibisco",
                             Origen = "África",
@@ -755,7 +744,6 @@ namespace Templanza.Data.Migrations
                             Id = 11,
                             CategoriaId = 2,
                             Contraindicaciones = "Somnolencia, combinar con sedantes",
-                            ImagenUrl = "/images/plantas/lavanda.webp",
                             NombreCientifico = "Lavandula angustifolia",
                             NombreComun = "Lavanda",
                             Origen = "Región mediterránea",
@@ -768,7 +756,6 @@ namespace Templanza.Data.Migrations
                             Id = 12,
                             CategoriaId = 1,
                             Contraindicaciones = "Uso excesivo en niños pequeños",
-                            ImagenUrl = "/images/plantas/anis-estrella.webp",
                             NombreCientifico = "Illicium verum",
                             NombreComun = "Anís estrella",
                             Origen = "China",
@@ -781,7 +768,6 @@ namespace Templanza.Data.Migrations
                             Id = 13,
                             CategoriaId = 1,
                             Contraindicaciones = "Embarazo en altas dosis, trastornos hepáticos",
-                            ImagenUrl = "/images/plantas/canela.webp",
                             NombreCientifico = "Cinnamomum verum",
                             NombreComun = "Canela",
                             Origen = "Sri Lanka",
@@ -794,7 +780,6 @@ namespace Templanza.Data.Migrations
                             Id = 14,
                             CategoriaId = 1,
                             Contraindicaciones = "Cálculos biliares",
-                            ImagenUrl = "/images/plantas/cardomomo.webp",
                             NombreCientifico = "Elettaria cardamomum",
                             NombreComun = "Cardamomo",
                             Origen = "India",
@@ -807,7 +792,6 @@ namespace Templanza.Data.Migrations
                             Id = 15,
                             CategoriaId = 1,
                             Contraindicaciones = "Trastornos de la coagulación",
-                            ImagenUrl = "/images/plantas/clavo-de-olor.webp",
                             NombreCientifico = "Syzygium aromaticum",
                             NombreComun = "Clavo de olor",
                             Origen = "Indonesia",
@@ -820,7 +804,6 @@ namespace Templanza.Data.Migrations
                             Id = 16,
                             CategoriaId = 4,
                             Contraindicaciones = "Cálculos biliares, anticoagulantes",
-                            ImagenUrl = "/images/plantas/curcuma.webp",
                             NombreCientifico = "Curcuma longa",
                             NombreComun = "Cúrcuma",
                             Origen = "India",
@@ -833,7 +816,6 @@ namespace Templanza.Data.Migrations
                             Id = 17,
                             CategoriaId = 1,
                             Contraindicaciones = "Hipertensión, embarazo",
-                            ImagenUrl = "/images/plantas/regaliz.webp",
                             NombreCientifico = "Glycyrrhiza glabra",
                             NombreComun = "Regaliz",
                             Origen = "Europa y Asia",
@@ -846,7 +828,6 @@ namespace Templanza.Data.Migrations
                             Id = 18,
                             CategoriaId = 2,
                             Contraindicaciones = "Hipotiroidismo",
-                            ImagenUrl = "/images/plantas/melisa.webp",
                             NombreCientifico = "Melissa officinalis",
                             NombreComun = "Melisa (Toronjil)",
                             Origen = "Europa",
@@ -859,7 +840,6 @@ namespace Templanza.Data.Migrations
                             Id = 19,
                             CategoriaId = 2,
                             Contraindicaciones = "Combinar con sedantes o alcohol",
-                            ImagenUrl = "/images/plantas/valeriana.webp",
                             NombreCientifico = "Valeriana officinalis",
                             NombreComun = "Valeriana",
                             Origen = "Europa y Asia",
@@ -872,7 +852,6 @@ namespace Templanza.Data.Migrations
                             Id = 20,
                             CategoriaId = 2,
                             Contraindicaciones = "Embarazo, combinar con sedantes",
-                            ImagenUrl = "/images/plantas/pasiflora.webp",
                             NombreCientifico = "Passiflora incarnata",
                             NombreComun = "Pasiflora",
                             Origen = "América",
@@ -885,7 +864,6 @@ namespace Templanza.Data.Migrations
                             Id = 21,
                             CategoriaId = 2,
                             Contraindicaciones = "Uso prolongado sin supervisión",
-                            ImagenUrl = "/images/plantas/tilo.webp",
                             NombreCientifico = "Tilia platyphyllos",
                             NombreComun = "Tilo",
                             Origen = "Europa",
@@ -898,7 +876,6 @@ namespace Templanza.Data.Migrations
                             Id = 22,
                             CategoriaId = 1,
                             Contraindicaciones = "Obstrucción de vías biliares, embarazo",
-                            ImagenUrl = "/images/plantas/boldo.webp",
                             NombreCientifico = "Peumus boldus",
                             NombreComun = "Boldo",
                             Origen = "Chile",
@@ -911,7 +888,6 @@ namespace Templanza.Data.Migrations
                             Id = 23,
                             CategoriaId = 2,
                             Contraindicaciones = "Sin contraindicaciones relevantes conocidas",
-                            ImagenUrl = "/images/plantas/cedron.webp",
                             NombreCientifico = "Aloysia citrodora",
                             NombreComun = "Cedrón",
                             Origen = "Sudamérica",
@@ -924,7 +900,6 @@ namespace Templanza.Data.Migrations
                             Id = 24,
                             CategoriaId = 4,
                             Contraindicaciones = "Insuficiencia renal o cardíaca",
-                            ImagenUrl = "/images/plantas/ortiga.webp",
                             NombreCientifico = "Urtica dioica",
                             NombreComun = "Ortiga",
                             Origen = "Europa",
@@ -937,7 +912,6 @@ namespace Templanza.Data.Migrations
                             Id = 25,
                             CategoriaId = 6,
                             Contraindicaciones = "Enfermedades autoinmunes",
-                            ImagenUrl = "/images/plantas/equinacea.webp",
                             NombreCientifico = "Echinacea purpurea",
                             NombreComun = "Equinácea",
                             Origen = "Norteamérica",
@@ -950,7 +924,6 @@ namespace Templanza.Data.Migrations
                             Id = 26,
                             CategoriaId = 3,
                             Contraindicaciones = "Embarazo en altas dosis, epilepsia",
-                            ImagenUrl = "/images/plantas/romero.webp",
                             NombreCientifico = "Rosmarinus officinalis",
                             NombreComun = "Romero",
                             Origen = "Región mediterránea",
@@ -963,7 +936,6 @@ namespace Templanza.Data.Migrations
                             Id = 27,
                             CategoriaId = 5,
                             Contraindicaciones = "Sin contraindicaciones relevantes conocidas",
-                            ImagenUrl = "/images/plantas/jazmin.webp",
                             NombreCientifico = "Jasminum officinale",
                             NombreComun = "Jazmín",
                             Origen = "Asia",
@@ -976,7 +948,6 @@ namespace Templanza.Data.Migrations
                             Id = 28,
                             CategoriaId = 6,
                             Contraindicaciones = "Cálculos renales",
-                            ImagenUrl = "/images/plantas/rosa-mosqueta.webp",
                             NombreCientifico = "Rosa canina",
                             NombreComun = "Rosa mosqueta (Escaramujo)",
                             Origen = "Europa",
@@ -989,7 +960,6 @@ namespace Templanza.Data.Migrations
                             Id = 29,
                             CategoriaId = 3,
                             Contraindicaciones = "Hipertensión, insomnio",
-                            ImagenUrl = "/images/plantas/ginseng.webp",
                             NombreCientifico = "Panax ginseng",
                             NombreComun = "Ginseng",
                             Origen = "Asia",
@@ -1002,7 +972,6 @@ namespace Templanza.Data.Migrations
                             Id = 30,
                             CategoriaId = 3,
                             Contraindicaciones = "Sensibilidad a la cafeína, hipertensión",
-                            ImagenUrl = "/images/plantas/yerba-mate.webp",
                             NombreCientifico = "Ilex paraguariensis",
                             NombreComun = "Yerba mate",
                             Origen = "Sudamérica",
